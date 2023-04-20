@@ -15,7 +15,7 @@ RED = (255, 0, 0)
 # Player properties
 player_width = 50
 player_height = 50
-player_health = 100 #Settign player health to 100%
+player_health = 100 # Setting player health to 100%
 
 def draw_health_bar(screen, health, x, y, width, height, color):
     health_percentage = max(0, min(1, health / 100))

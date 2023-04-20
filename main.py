@@ -107,6 +107,9 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_x += 5
 
+    if keys[pygame.K_LEFT]:
+        player_x += -5
+
     player_x = max(0, min(player_x, WIDTH - player_width))
 
     screen.fill(WHITE)

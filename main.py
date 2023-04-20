@@ -12,7 +12,7 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-# Player properties
+# Player properties and diminsions
 player_width = 50
 player_height = 50
 player_health = 100 # Setting player health to 100%
@@ -26,7 +26,7 @@ def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color)
     screen.blit(health_percentage_text, (x, y))
 
-# Cloud properties
+# Cloud properties and dimensions
 cloud_width = 100
 cloud_height = 50
 cloud_list = []

@@ -26,7 +26,7 @@ for i in range(5):  # creates 5 clouds
     cloud_y = random.randint(-500, 0)
     cloud_list.append([cloud_x, cloud_y])
 
-cloud_speed = 8
+cloud_speed = 5
 
 # Set up game window
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -107,6 +107,9 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_x += 5
 
+    if keys[pygame.K_LEFT]:
+        player_x += -5
+
     player_x = max(0, min(player_x, WIDTH - player_width))
 
     screen.fill(WHITE)
@@ -149,6 +152,6 @@ while running:
 screen.fill(WHITE)
 screen.blit(game_over_text, game_over_rect)
 pygame.display.flip()
-pygame.time.delay(3000)
+pygame.time.delay(2000)
 
 pygame.quit()

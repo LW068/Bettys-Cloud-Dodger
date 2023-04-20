@@ -1,5 +1,7 @@
 import pygame
 import random
+import sys
+import os
 
 pygame.init()
 
@@ -12,7 +14,7 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-# Player properties and diminsions
+# Player properties and dimensions
 player_width = 50
 player_height = 50
 player_health = 100 # Setting player health to 100%

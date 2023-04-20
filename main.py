@@ -15,6 +15,16 @@ RED = (255, 0, 0)
 # Player properties
 player_width = 50
 player_height = 50
+player_health = 100 #Settign player health to 100%
+
+def draw_health_bar(screen, health, x, y, width, height, color):
+    health_percentage = max(0, min(1, health / 100))
+    pygame.draw.rect(screen, (255, 255, 255), (x, y, width, height), 2)  # Drawing health bar outline
+    pygame.draw.rect(screen, color, (x + 2, y + 2, (width - 4) * health_percentage, height - 4))  # Drawing health bar filled
+
+def draw_health_percentage(screen, health, x, y, font, color):
+    health_percentage_text = font.render(f"{health}%", True, color)
+    screen.blit(health_percentage_text, (x, y))
 
 # Cloud properties
 cloud_width = 100
@@ -34,6 +44,7 @@ pygame.display.set_caption("Cloud Dodger")
 
 # Set up font
 font = pygame.font.Font(None, 64)
+percentage_font = pygame.font.Font(None, 32)  # Create a font for the health percentage
 
 # Draw start button and game title
 start_text = font.render("START", True, WHITE)
@@ -48,7 +59,7 @@ clock = pygame.time.Clock()
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
 
-# Set up game loop
+# Start CloudDodger Game Loop
 menu = True
 running = False
 while menu:
@@ -114,6 +125,11 @@ while running:
 
     screen.fill(WHITE)
 
+    percentage_font = pygame.font.Font(None, 32)  # Create a font for the health percentage
+
+    draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
+    draw_health_percentage(screen, player_health, 10 + 200 // 2, 10, percentage_font, (0, 255, 0))  # Draw health percentage
+  
     # Move and draw clouds
     for cloud in cloud_list:
         cloud[1] += cloud_speed
@@ -134,8 +150,12 @@ while running:
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rect):
-            running = False
-            break
+            player_health -= 10  # Decrease player health by 10
+
+    if player_health <= 0:
+        running = False  # End the game if player health reaches 0
+
+    pygame.draw.rect(screen, BLUE, (player_x, player_y, player_width, player_height))
 
     pygame.draw.rect(
         screen,

@@ -36,8 +36,8 @@ clock = pygame.time.Clock()
 
 # set up timer to count up
 def draw_timer(screen, elapsed_time, x, y, font, color):
-    timer_text = font.render(f"Time: {int(elapsed_time // 1000)}s", True, color)
-    screen.blit(timer_text, (x, y))
+    timer_text = font.render(f"{int(elapsed_time // 1000)}s", True, color)
+    screen.blit(timer_text, (x + 80, y))
 
 timer_start = pygame.time.get_ticks()
 

@@ -22,8 +22,8 @@ player_health = 100  # Setting player health to 100%
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
 
-# Set up font
-font = pygame.font.Font(None, 30)
+# Timer Font Size
+font = pygame.font.Font(None, 22)
 
 # Set up clock
 clock = pygame.time.Clock()
@@ -161,7 +161,7 @@ while running:
     screen.fill(LIGHT_BLUE)
 
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 145, 10, font, RED)
+    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
 
 
     # Create a font for the health percentage

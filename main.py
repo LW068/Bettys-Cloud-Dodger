@@ -19,6 +19,21 @@ player_width = 50
 player_height = 170
 player_health = 100  # Setting player health to 100%
 
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Timer")
+
+# Set up font
+font = pygame.font.Font(None, 30)
+
+# Set up clock
+clock = pygame.time.Clock()
+
+# set up timer to count up
+def draw_timer(screen, elapsed_time, x, y, font, color):
+    timer_text = font.render(f"Time: {int(elapsed_time // 1000)}s", True, color)
+    screen.blit(timer_text, (x, y))
+
+timer_start = pygame.time.get_ticks()
 
 def draw_health_bar(screen, health, x, y, width, height, color):
     health_percentage = max(0, min(1, health / 100))
@@ -145,6 +160,9 @@ while running:
     LIGHT_BLUE = (173, 216, 230)
     screen.fill(LIGHT_BLUE)
 
+    elapsed_time = pygame.time.get_ticks() - timer_start
+    draw_timer(screen, elapsed_time, WIDTH - 145, 10, font, RED)
+
 
     # Create a font for the health percentage
     percentage_font = pygame.font.Font(None, 32)
@@ -177,7 +195,7 @@ while running:
             player_health -= 10  # Decrease player health by 10
 
     if player_health <= 0:
-        running = False  # End the game if player health reaches 0
+        running = False  # End the game if player health reaches 0% Health
 
     screen.blit(betty_image, (player_x, player_y))
 

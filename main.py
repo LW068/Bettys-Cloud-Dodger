@@ -53,6 +53,7 @@ cloud_speed = 5
 # Set up game window
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cloud Dodger")
+gamemenu_image = pygame.image.load('graphics/gamemenu.png')
 
 # Set up font
 font = pygame.font.Font(None, 64)
@@ -87,7 +88,7 @@ while menu:
                 menu = False
 
     # Draw menu screen
-    screen.fill(BLUE)
+    screen.blit(gamemenu_image, (0,0))
     pygame.draw.rect(screen, RED, start_button)
     start_text_rect = start_text.get_rect(center=start_button.center)
     screen.blit(start_text, start_text_rect)

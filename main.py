@@ -19,6 +19,12 @@ player_width = 100
 player_height = 100
 player_health = 100  # Setting player health to 100%
 
+# Hitbox adjustment for Player 
+player_hitbox_offset_x = 20
+player_hitbox_offset_y = 20
+player_hitbox_width = player_width - player_hitbox_offset_x
+player_hitbox_height = player_height - player_hitbox_offset_y
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
 
@@ -133,10 +139,9 @@ player_y = HEIGHT - player_height
 
 
 def check_collision(player, cloud):
-    return (player[0] < cloud[0] + cloud_width and
-            player[0] + player_width > cloud[0] and
-            player[1] < cloud[1] + cloud_height and
-            player[1] + player_height > cloud[1])
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+    return player_hitbox.colliderect(cloud_rect)
 
 
 # Set up game over text

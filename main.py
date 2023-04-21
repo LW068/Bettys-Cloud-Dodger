@@ -151,15 +151,8 @@ while running:
 
     draw_health_bar(screen, player_health, 10, 10, 200,
                     20, (0, 255, 0))  # Draw health bar
-    draw_health_percentage(
-        screen,
-        player_health,
-        10 + 200 // 2,
-        10,
-        percentage_font,
-        (0,
-         255,
-         0))  # Draw health percentage
+    draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
+     # Health bar drawn + outline
 
     # Move and draw clouds
     for cloud in cloud_list:

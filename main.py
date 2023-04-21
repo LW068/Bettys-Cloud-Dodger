@@ -16,7 +16,7 @@ RED = (255, 0, 0)
 
 # Player properties and dimensions
 player_width = 50
-player_height = 50
+player_height = 170
 player_health = 100  # Setting player health to 100%
 
 
@@ -71,6 +71,7 @@ clock = pygame.time.Clock()
 # Set up player
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
+betty_image = pygame.image.load('graphics/betty.png')
 
 # Start CloudDodger Game Loop
 menu = True
@@ -178,21 +179,7 @@ while running:
     if player_health <= 0:
         running = False  # End the game if player health reaches 0
 
-    pygame.draw.rect(
-        screen,
-        BLUE,
-        (player_x,
-         player_y,
-         player_width,
-         player_height))
-
-    pygame.draw.rect(
-        screen,
-        BLUE,
-        (player_x,
-         player_y,
-         player_width,
-         player_height))
+    screen.blit(betty_image, (player_x, player_y))
 
     pygame.display.flip()
     clock.tick(60)

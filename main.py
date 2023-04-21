@@ -161,7 +161,7 @@ while running:
     screen.fill(LIGHT_BLUE)
 
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 145, 10, font, RED)
+    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
 
 
     # Create a font for the health percentage

@@ -98,8 +98,9 @@ player_y = HEIGHT - player_height
 betty_image = pygame.image.load('graphics/betty.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
 space_image = pygame.image.load('graphics/spaceimage.png')
-cloudimage = pygame.image.load('graphics/cloudimage.png')
+cloud_image = pygame.image.load('graphics/cloudimage.png')
 betty_image = pygame.transform.scale(betty_image, (100, 100))
+cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 
 # Start CloudDodger Game Loop
 menu = True
@@ -136,8 +137,6 @@ player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
 
 # Collisions between player and clouds
-
-
 def check_collision(player, cloud):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
@@ -170,14 +169,12 @@ while running:
     elapsed_time = pygame.time.get_ticks() - timer_start
     draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
 
-
     # Health Percentage Font
     percentage_font = pygame.font.Font(None, 32)
 
-    draw_health_bar(screen, player_health, 10, 10, 200,
-                    20, (0, 255, 0))  # Draw health bar
+    draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
     draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
-     # Health bar drawn + outline
+    # Health bar drawn + outline
 
     # Move and draw clouds
     for cloud in cloud_list:
@@ -186,13 +183,7 @@ while running:
             cloud[0] = random.randint(0, WIDTH - cloud_width)
             cloud[1] = random.randint(-500, 0)
 
-        pygame.draw.rect(
-            screen,
-            BLUE,
-            (cloud[0],
-             cloud[1],
-                cloud_width,
-                cloud_height))
+        screen.blit(cloud_image, (cloud[0], cloud[1]))
 
     # Check for collision
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)

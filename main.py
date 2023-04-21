@@ -92,6 +92,7 @@ player_y = HEIGHT - player_height
 betty_image = pygame.image.load('graphics/betty.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
 space_image = pygame.image.load('graphics/spaceimage.png')
+cloudimage = pygame.image.load('graphics/cloudimage.png')
 
 # Start CloudDodger Game Loop
 menu = True
@@ -127,7 +128,7 @@ for i in range(5):
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
 
-# New function to check for collisions between player and clouds
+# Collisions between player and clouds
 
 
 def check_collision(player, cloud):
@@ -164,7 +165,7 @@ while running:
     draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
 
 
-    # Create a font for the health percentage
+    # Health Percentage Font
     percentage_font = pygame.font.Font(None, 32)
 
     draw_health_bar(screen, player_health, 10, 10, 200,

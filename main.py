@@ -138,7 +138,9 @@ while running:
 
     player_x = max(0, min(player_x, WIDTH - player_width))
 
-    screen.fill(WHITE)
+    LIGHT_BLUE = (173, 216, 230)
+    screen.fill(LIGHT_BLUE)
+
 
     # Create a font for the health percentage
     percentage_font = pygame.font.Font(None, 32)

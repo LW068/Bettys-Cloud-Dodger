@@ -15,8 +15,8 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
 # Player properties and dimensions
-player_width = 50
-player_height = 170
+player_width = 100
+player_height = 100
 player_health = 100  # Setting player health to 100%
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -93,6 +93,7 @@ betty_image = pygame.image.load('graphics/betty.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
 space_image = pygame.image.load('graphics/spaceimage.png')
 cloudimage = pygame.image.load('graphics/cloudimage.png')
+betty_image = pygame.transform.scale(betty_image, (100, 100))
 
 # Start CloudDodger Game Loop
 menu = True

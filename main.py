@@ -72,7 +72,11 @@ clock = pygame.time.Clock()
 # Set up player
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
+
+# image loader
 betty_image = pygame.image.load('graphics/betty.png')
+spaceimage = pygame.image.load('graphics/spaceimage.png')
+space_image = pygame.image.load('graphics/spaceimage.png')
 
 # Start CloudDodger Game Loop
 menu = True
@@ -199,7 +203,7 @@ def game_over_screen():
                 if restart_button.collidepoint(event.pos):
                     return True
 
-        screen.fill(WHITE)
+        screen.blit(spaceimage, (0, 0))  # game over background
         screen.blit(game_over_text, game_over_rect)
         pygame.draw.rect(screen, RED, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)

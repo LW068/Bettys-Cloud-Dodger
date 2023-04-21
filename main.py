@@ -17,16 +17,26 @@ RED = (255, 0, 0)
 # Player properties and dimensions
 player_width = 50
 player_height = 50
-player_health = 100 # Setting player health to 100%
+player_health = 100  # Setting player health to 100%
+
 
 def draw_health_bar(screen, health, x, y, width, height, color):
     health_percentage = max(0, min(1, health / 100))
-    pygame.draw.rect(screen, (255, 255, 255), (x, y, width, height), 2)  # Drawing health bar outline
-    pygame.draw.rect(screen, color, (x + 2, y + 2, (width - 4) * health_percentage, height - 4))  # Drawing health bar filled
+    # Drawing health bar outline
+    pygame.draw.rect(screen, (255, 255, 255), (x, y, width, height), 2)
+    pygame.draw.rect(
+        screen,
+        color,
+        (x + 2,
+         y + 2,
+         (width - 4) * health_percentage,
+            height - 4))  # Drawing health bar filled
+
 
 def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color)
     screen.blit(health_percentage_text, (x, y))
+
 
 # Cloud properties and dimensions
 cloud_width = 100
@@ -46,7 +56,8 @@ pygame.display.set_caption("Cloud Dodger")
 
 # Set up font
 font = pygame.font.Font(None, 64)
-percentage_font = pygame.font.Font(None, 32)  # Create a font for the health percentage
+# Create a font for the health percentage
+percentage_font = pygame.font.Font(None, 32)
 
 # Draw start button and game title
 start_text = font.render("START", True, WHITE)
@@ -127,11 +138,21 @@ while running:
 
     screen.fill(WHITE)
 
-    percentage_font = pygame.font.Font(None, 32)  # Create a font for the health percentage
+    # Create a font for the health percentage
+    percentage_font = pygame.font.Font(None, 32)
 
-    draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
-    draw_health_percentage(screen, player_health, 10 + 200 // 2, 10, percentage_font, (0, 255, 0))  # Draw health percentage
-  
+    draw_health_bar(screen, player_health, 10, 10, 200,
+                    20, (0, 255, 0))  # Draw health bar
+    draw_health_percentage(
+        screen,
+        player_health,
+        10 + 200 // 2,
+        10,
+        percentage_font,
+        (0,
+         255,
+         0))  # Draw health percentage
+
     # Move and draw clouds
     for cloud in cloud_list:
         cloud[1] += cloud_speed
@@ -157,7 +178,13 @@ while running:
     if player_health <= 0:
         running = False  # End the game if player health reaches 0
 
-    pygame.draw.rect(screen, BLUE, (player_x, player_y, player_width, player_height))
+    pygame.draw.rect(
+        screen,
+        BLUE,
+        (player_x,
+         player_y,
+         player_width,
+         player_height))
 
     pygame.draw.rect(
         screen,
@@ -170,10 +197,32 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
-# Show the "Game Over" screen
-screen.fill(WHITE)
-screen.blit(game_over_text, game_over_rect)
-pygame.display.flip()
-pygame.time.delay(2000)
+def game_over_screen():
+    restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
+    restart_text = font.render("RESTART", True, WHITE)
 
-pygame.quit()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button.collidepoint(event.pos):
+                    return True
+
+        screen.fill(WHITE)
+        screen.blit(game_over_text, game_over_rect)
+        pygame.draw.rect(screen, RED, restart_button)
+        restart_text_rect = restart_text.get_rect(center=restart_button.center)
+        screen.blit(restart_text, restart_text_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+# Show the "Game Over" screen
+restart = game_over_screen()
+
+if restart:
+    # If the player chose to restart, run the script again
+    os.execv(sys.executable, ['python'] + sys.argv)
+else:
+    pygame.quit()

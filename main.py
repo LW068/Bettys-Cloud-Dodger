@@ -19,9 +19,9 @@ player_width = 100
 player_height = 100
 player_health = 100  # Setting player health to 100%
 
-# Hitbox adjustment for Player 
-player_hitbox_offset_x = 20
-player_hitbox_offset_y = 20
+# Hitbox adjustment for Player / Collison detection area for player
+player_hitbox_offset_x = 30
+player_hitbox_offset_y = 30
 player_hitbox_width = player_width - player_hitbox_offset_x
 player_hitbox_height = player_height - player_hitbox_offset_y
 

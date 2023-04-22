@@ -99,8 +99,10 @@ betty_image = pygame.image.load('graphics/betty.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
 space_image = pygame.image.load('graphics/spaceimage.png')
 cloud_image = pygame.image.load('graphics/cloudimage.png')
+cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
 betty_image = pygame.transform.scale(betty_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
+cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 
 # Start CloudDodger Game Loop
 menu = True
@@ -184,6 +186,13 @@ while running:
             cloud[1] = random.randint(-500, 0)
 
         screen.blit(cloud_image, (cloud[0], cloud[1]))
+    # Choose the cloud image based on elapsed time
+    if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
+        current_cloud_image = cloud_image2
+    else:
+        current_cloud_image = cloud_image
+
+    screen.blit(current_cloud_image, (cloud[0], cloud[1]))
 
     # Check for collision
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)

@@ -165,12 +165,9 @@ while running:
         player_x += 5
         betty_image = betty_right_image
 
-    elif keys[pygame.K_LEFT]:
+    if keys[pygame.K_LEFT]:
         player_x += -5
         betty_image = betty_left_image
-
-    else:
-        betty_image = betty_image
 
     player_x = max(0, min(player_x, WIDTH - player_width))
 

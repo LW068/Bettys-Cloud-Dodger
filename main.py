@@ -2,8 +2,10 @@ import pygame
 import random
 import sys
 import os
+from pygame import mixer
 
 pygame.init()
+mixer.init()
 
 # Screen dimensions
 WIDTH = 800
@@ -189,6 +191,15 @@ def check_collision_seahorse(player, seahorse):
 # Set up game over text
 game_over_text = font.render("GAME OVER", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+
+music_path = 'audios/gamemusic.mp3'
+
+if os.path.isfile(music_path):
+    try:
+        mixer.music.load(music_path)
+        mixer.music.play(-1)
+    except pygame.error:
+        pass
 
 
 # Start game loop

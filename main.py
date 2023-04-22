@@ -209,7 +209,7 @@ while running:
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rect):
-            player_health -= 10  # Decrease player health by 10
+            player_health -= 3  # Decrease player health by 10
 
     if player_health <= 0:
         running = False  # End the game if player health reaches 0% Health

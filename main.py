@@ -87,6 +87,7 @@ for i in range(1): # Generates 1 seahorse every 10 seconds for extra health boos
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cloud Dodger")
 gamemenu_image = pygame.image.load('graphics/gamemenu.png')
+gamemenu_image = pygame.transform.scale(gamemenu_image, (WIDTH, HEIGHT))
 
 # Set up font
 font = pygame.font.Font(None, 64)
@@ -123,6 +124,7 @@ betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
+spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
 
 # Start CloudDodger Game Loop
 menu = True

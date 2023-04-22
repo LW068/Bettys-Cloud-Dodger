@@ -255,7 +255,7 @@ while running:
     for seahorse in seahorse_list:
         seahorse_rect = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
         if check_collision_seahorse(player_rect, seahorse_rect):
-            player_health += .5 # Increasing betty health when collided +15 health
+            player_health += 1 # Increasing betty health when collided
 
     screen.blit(betty_image, (player_x, player_y))
 

@@ -71,6 +71,18 @@ for i in range(5):  # creates 5 clouds
 
 cloud_speed = 5
 
+# Seahorse properties and dimenesion
+seahorse_width = 100
+seahorse_height = 100
+seahorse_list = []
+
+seahorse_speed = 3
+
+for i in range(1): # Generates 1 seahorse every 10 seconds for extra health boost
+    seahorse_x = random.randint(0, WIDTH - cloud_width)
+    seahorse_y = random.randint(-500, 0)
+    seahorse_list.append([seahorse_x, seahorse_y])
+
 # Set up game window
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cloud Dodger")
@@ -103,6 +115,8 @@ cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
 betty_left_image = pygame.image.load('graphics/bettyleft.png')
 betty_right_image = pygame.image.load('graphics/bettyright.png')
 betty_default_image = pygame.image.load("graphics/betty.png")
+seahorse_image = pygame.image.load('graphics/seahorse.png')
+seahorse_image = pygame.transform.scale(seahorse_image, (200, 200))
 betty_image = pygame.transform.scale(betty_image, (100, 100))
 betty_left_image = pygame.transform.scale(betty_left_image, (100, 100))
 betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
@@ -140,6 +154,13 @@ for i in range(5):
     cloud_y = random.randint(-500, 0)
     cloud_list.append([cloud_x, cloud_y])
 
+# Seahorse list
+seahorse_list = []
+for i in range(1):
+    seahorse_x = random.randint(0, WIDTH - seahorse_width)
+    seahorse_y = random.randint(-500 , 0 )
+    seahorse_list.append([seahorse_x, seahorse_y])
+
 # Set up player
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
@@ -149,6 +170,12 @@ def check_collision(player, cloud):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return player_hitbox.colliderect(cloud_rect)
+
+# Collison between Player and Seahorse 
+def check_collision(player, seahorse):
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y //2, player_hitbox_width, player_hitbox_height)
+    seahorse = pygame.Rect(cloud[0], cloud[1], seahorse_width, seahorse_height)
+    return player_hitbox.colliderect(seahorse)
 
 
 # Set up game over text
@@ -204,7 +231,16 @@ while running:
 
     screen.blit(current_cloud_image, (cloud[0], cloud[1]))
 
-    # Check for collision
+    # draw seahorse 
+    for seahorse in seahorse_list:
+        seahorse[1] += seahorse_speed
+        if seahorse[1] > HEIGHT:
+            seahorse[0] = random.randint(0, WIDTH - cloud_width)
+            seahorse[1] = random.randint(-500, 0)
+            
+        screen.blit(seahorse_image, (seahorse[0], seahorse[1]))
+
+    # Check for collision between Clouds and Betty
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
@@ -213,6 +249,13 @@ while running:
 
     if player_health <= 0:
         running = False  # End the game if player health reaches 0% Health
+
+    # Check for collison between Betty and Seahorse
+    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    for seahorse in seahorse_list:
+        seahorse_rect = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
+        if check_collision(player_rect, seahorse_rect):
+            player_health += 2 # Increasing betty health when collided +2 health
 
     screen.blit(betty_image, (player_x, player_y))
 

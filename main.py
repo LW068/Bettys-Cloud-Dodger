@@ -117,6 +117,8 @@ betty_left_image = pygame.image.load('graphics/bettyleft.png')
 betty_right_image = pygame.image.load('graphics/bettyright.png')
 betty_default_image = pygame.image.load("graphics/betty.png")
 seahorse_image = pygame.image.load('graphics/seahorse.png')
+start_button_image = pygame.image.load('graphics/startbutton.GIF')
+start_button_image = pygame.transform.scale(start_button_image, (150, 150))
 seahorse_image = pygame.transform.scale(seahorse_image, (200, 200))
 betty_image = pygame.transform.scale(betty_image, (100, 100))
 betty_left_image = pygame.transform.scale(betty_left_image, (100, 100))
@@ -126,9 +128,9 @@ cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
 
-# Start CloudDodger Game Loop
 menu = True
 running = False
+button_counter = 0
 while menu:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -140,10 +142,14 @@ while menu:
                 menu = False
 
     # Draw menu screen
-    screen.blit(gamemenu_image, (0,0))
-    pygame.draw.rect(screen, RED, start_button)
-    start_text_rect = start_text.get_rect(center=start_button.center)
-    screen.blit(start_text, start_text_rect)
+    screen.blit(gamemenu_image, (0, 0))
+
+    # Flashing button image
+    button_counter += .5
+    if button_counter % 30 < 15:
+        start_button_image_rect = start_button_image.get_rect(center=start_button.center)
+        screen.blit(start_button_image, start_button_image_rect)  # Display the start button image
+
     screen.blit(game_title, game_title_rect)
 
     pygame.display.flip()
@@ -183,6 +189,7 @@ def check_collision_seahorse(player, seahorse):
 # Set up game over text
 game_over_text = font.render("GAME OVER", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+
 
 # Start game loop
 while running:

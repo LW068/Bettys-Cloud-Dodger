@@ -102,11 +102,13 @@ cloud_image = pygame.image.load('graphics/cloudimage.png')
 cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
 betty_left_image = pygame.image.load('graphics/bettyleft.png')
 betty_right_image = pygame.image.load('graphics/bettyright.png')
+betty_default_image = pygame.image.load("graphics/betty.png")
 betty_image = pygame.transform.scale(betty_image, (100, 100))
 betty_left_image = pygame.transform.scale(betty_left_image, (100, 100))
 betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
+betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 
 # Start CloudDodger Game Loop
 menu = True
@@ -164,10 +166,12 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_x += 5
         betty_image = betty_right_image
-
-    if keys[pygame.K_LEFT]:
+    elif keys[pygame.K_LEFT]:
         player_x += -5
         betty_image = betty_left_image
+    else:
+        betty_image = betty_default_image
+        screen.blit(betty_image, (player_x, player_y))
 
     player_x = max(0, min(player_x, WIDTH - player_width))
 

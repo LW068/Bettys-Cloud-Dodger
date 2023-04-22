@@ -172,9 +172,9 @@ def check_collision(player, cloud):
     return player_hitbox.colliderect(cloud_rect)
 
 # Collison between Player and Seahorse 
-def check_collision(player, seahorse):
+def check_collision_seahorse(player, seahorse):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y //2, player_hitbox_width, player_hitbox_height)
-    seahorse = pygame.Rect(cloud[0], cloud[1], seahorse_width, seahorse_height)
+    seahorse = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
     return player_hitbox.colliderect(seahorse)
 
 
@@ -254,8 +254,8 @@ while running:
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for seahorse in seahorse_list:
         seahorse_rect = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
-        if check_collision(player_rect, seahorse_rect):
-            player_health += 2 # Increasing betty health when collided +2 health
+        if check_collision_seahorse(player_rect, seahorse_rect):
+            player_health += .5 # Increasing betty health when collided +15 health
 
     screen.blit(betty_image, (player_x, player_y))
 

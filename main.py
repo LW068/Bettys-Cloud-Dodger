@@ -19,9 +19,9 @@ player_width = 100
 player_height = 100
 player_health = 100  # Setting player health to 100%
 
-# Hitbox adjustment for Player 
-player_hitbox_offset_x = 20
-player_hitbox_offset_y = 20
+# Hitbox adjustment for Player / Collison detection area for player
+player_hitbox_offset_x = 30
+player_hitbox_offset_y = 30
 player_hitbox_width = player_width - player_hitbox_offset_x
 player_hitbox_height = player_height - player_hitbox_offset_y
 
@@ -209,7 +209,7 @@ while running:
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rect):
-            player_health -= 10  # Decrease player health by 10
+            player_health -= 3  # Decrease player health by 10
 
     if player_health <= 0:
         running = False  # End the game if player health reaches 0% Health

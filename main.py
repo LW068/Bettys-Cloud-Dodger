@@ -363,3 +363,4 @@ if restart:
     os.execv(sys.executable, ['python'] + sys.argv)
 else:
     pygame.quit()
+

@@ -213,9 +213,9 @@ def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
     screen.blit(high_score_text, (x, y))
 
-# Start game loop / constantly updating as long as True
+# Start game loop / constantly updating 
 while running:
-    for event in pygame.event.get():
+    for event in pygame.event.get(): # Iterates through all event queues
         if event.type == pygame.QUIT:
             running = False
 

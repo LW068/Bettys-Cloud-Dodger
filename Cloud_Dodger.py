@@ -63,7 +63,7 @@ def draw_health_percentage(screen, health, x, y, font, color):
 # Rain Cloud Properties 
 raincloud_width = 100
 raincloud_height = 100
-rain_speed = 3
+rain_speed = 5
 
 # Cloud List
 cloud_list = []
@@ -85,7 +85,6 @@ for i in range(5):  # Spawns 5 raining clouds
     rain_cloud_x = random.randint(0, WIDTH - cloud_width)
     rain_cloud_y = random.randint(-500, 0)
     rain_cloud_list.append([rain_cloud_x, rain_cloud_y])
-
 
 # Seahorse properties and dimenesion
 seahorse_width = 100

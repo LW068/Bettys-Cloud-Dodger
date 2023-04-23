@@ -4,6 +4,7 @@ import sys
 import os
 from pygame import mixer
 
+#Initilizing pygame / sound mixer for custom audio clips 
 pygame.init()
 mixer.init()
 
@@ -27,10 +28,9 @@ player_hitbox_offset_y = 30
 player_hitbox_width = player_width - player_hitbox_offset_x
 player_hitbox_height = player_height - player_hitbox_offset_y
 
+#Timer Font size / Dimensions
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
-
-# Timer Font Size
 font = pygame.font.Font(None, 22)
 
 # Set up clock
@@ -54,14 +54,17 @@ def draw_health_bar(screen, health, x, y, width, height, color):
          y + 2,
          (width - 4) * health_percentage,
             height - 4))  # Drawing health bar filled
-
+    
+# Health percentage FONT
+font = pygame.font.Font(None, 64)
+# Create a font for the health percentage
+percentage_font = pygame.font.Font(None, 32)
 
 def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color)
     screen.blit(health_percentage_text, (x, y))
 
-
-# Cloud properties and dimensions
+# Cloud Properties and Dimensions
 cloud_width = 100
 cloud_height = 50
 cloud_list = []
@@ -73,37 +76,28 @@ for i in range(5):  # creates 5 clouds
 
 cloud_speed = 5
 
-# Seahorse properties and dimenesion
+# Seahorse properties and dimensions
 seahorse_width = 100
 seahorse_height = 100
 seahorse_list = []
-
 seahorse_speed = 3
 
-for i in range(1): # Generates 1 seahorse every 10 seconds for extra health boost
+for i in range(1): # Generates Seahorses for Extra Health Boost
     seahorse_x = random.randint(0, WIDTH - cloud_width)
     seahorse_y = random.randint(-500, 0)
     seahorse_list.append([seahorse_x, seahorse_y])
 
-# Set up game window
+# Main Menu Page
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cloud Dodger")
 gamemenu_image = pygame.image.load('graphics/gamemenu.png')
 gamemenu_image = pygame.transform.scale(gamemenu_image, (WIDTH, HEIGHT))
 
-# Set up font
-font = pygame.font.Font(None, 64)
-# Create a font for the health percentage
-percentage_font = pygame.font.Font(None, 32)
-
-# Draw start button and game title
+# Main Menu Start button and Game Title
 start_text = font.render("START", True, WHITE)
 start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 game_title = font.render("CLOUD DODGER", True, RED)
 game_title_rect = game_title.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-
-# Set up clock
-clock = pygame.time.Clock()
 
 # Set up player
 player_x = WIDTH // 2 - player_width // 2
@@ -130,7 +124,7 @@ cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
 
-# Image Loader 
+# Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
 
 menu = True
@@ -146,7 +140,7 @@ while menu:
                 running = True
                 menu = False
 
-    # Draw menu screen
+    # Draw Main Menu Screen
     screen.blit(gamemenu_image, (0, 0))
 
     # Flashing button image
@@ -160,7 +154,7 @@ while menu:
     pygame.display.flip()
     clock.tick(60)
 
-# Set up cloud list
+# Default Cloud list
 cloud_list = []
 for i in range(5):
     cloud_x = random.randint(0, WIDTH - cloud_width)
@@ -191,7 +185,7 @@ def check_collision_seahorse(player, seahorse):
     return player_hitbox.colliderect(seahorse)
 
 
-# Set up game over text
+# Set up Game Over text
 game_over_text = font.render("GAME OVER", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
 
@@ -239,7 +233,7 @@ while running:
     draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
     # Health bar drawn + outline
 
-    # Move and draw clouds
+    # Spawn and Render Cloud Blit
     for cloud in cloud_list:
         cloud[1] += cloud_speed
         if cloud[1] > HEIGHT:
@@ -247,7 +241,7 @@ while running:
             cloud[1] = random.randint(-500, 0)
 
         screen.blit(cloud_image, (cloud[0], cloud[1]))
-    # Choose the cloud image based on elapsed time
+    # Darker Cloud Spawns 30 Seconds in game
     if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
         current_cloud_image = cloud_image2
     else:
@@ -255,7 +249,7 @@ while running:
 
     screen.blit(current_cloud_image, (cloud[0], cloud[1]))
 
-    # draw seahorse 
+    # Rendering Seahorse Blit
     for seahorse in seahorse_list:
         seahorse[1] += seahorse_speed
         if seahorse[1] > HEIGHT:

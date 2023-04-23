@@ -17,18 +17,19 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-# Player properties and dimensions
-player_width = 100
-player_height = 100
-player_health = 100  # Setting player health to 100%
-
-# Stores Highscore / converts to integer number 
+# Stores Highscore / converts to integer number / File Reader
 try:
     with open("high_score.txt", "r") as file:
         high_score = int(file.read())
 except FileNotFoundError:
     high_score = 0
 
+# Player properties and dimensions
+player_width = 100
+player_height = 100
+player_health = 100  # Setting player health to 100%
+player_x = WIDTH // 2 - player_width // 2
+player_y = HEIGHT - player_height
 
 # Hitbox adjustment for Player / Collison detection area for player / setting pixels
 player_hitbox_offset_x = 30
@@ -107,10 +108,6 @@ start_text = font.render("START", True, WHITE)
 start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 game_title = font.render("CLOUD DODGER", True, RED)
 game_title_rect = game_title.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-
-# Set up player
-player_x = WIDTH // 2 - player_width // 2
-player_y = HEIGHT - player_height
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
@@ -211,12 +208,12 @@ if os.path.isfile(music_path):
     except pygame.error:
         pass
 
-# Show last high score
+# Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
     screen.blit(high_score_text, (x, y))
 
-# Start game loop
+# Start game loop / constantly updating as long as True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

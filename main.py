@@ -21,6 +21,12 @@ RED = (255, 0, 0)
 player_width = 100
 player_height = 100
 player_health = 100  # Setting player health to 100%
+try:
+    with open("high_score.txt", "r") as file:
+        high_score = int(file.read())
+except FileNotFoundError:
+    high_score = 0
+
 
 # Hitbox adjustment for Player / Collison detection area for player
 player_hitbox_offset_x = 30
@@ -140,6 +146,10 @@ while menu:
                 running = True
                 menu = False
 
+    high_score_text = font.render(f"High Score: {high_score}s", True, WHITE)
+    high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 75))
+    screen.blit(high_score_text, high_score_rect)
+
     # Draw Main Menu Screen
     screen.blit(gamemenu_image, (0, 0))
 
@@ -198,6 +208,10 @@ if os.path.isfile(music_path):
     except pygame.error:
         pass
 
+# Show last high score
+def draw_high_score(screen, high_score, x, y, font, color):
+    high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
+    screen.blit(high_score_text, (x, y))
 
 # Start game loop
 while running:
@@ -224,6 +238,13 @@ while running:
 
     elapsed_time = pygame.time.get_ticks() - timer_start
     draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
+
+    # Render and blit the high score
+    draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)
+
+    #High Score
+    with open("high_score.txt", "w") as file:
+        file.write(str(high_score))
 
     # Health Percentage Font
     percentage_font = pygame.font.Font(None, 32)
@@ -270,6 +291,11 @@ while running:
         bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
         bettydeath_sound.play() # When Betty health hits 0%
         running = False  # End the game if player health reaches 0% Health
+
+    # Players High score
+    current_score = int(elapsed_time // 1000)
+    if current_score > high_score:
+        high_score = current_score
 
     # Check for collison between Betty and Seahorse
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)

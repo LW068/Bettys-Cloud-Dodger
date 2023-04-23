@@ -17,18 +17,19 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-# Player properties and dimensions
-player_width = 100
-player_height = 100
-player_health = 100  # Setting player health to 100%
-
-# Stores Highscore / converts to integer number 
+# Stores Highscore / converts to integer number / File Reader
 try:
     with open("high_score.txt", "r") as file:
         high_score = int(file.read())
 except FileNotFoundError:
     high_score = 0
 
+# Player properties and dimensions
+player_width = 100
+player_height = 100
+player_health = 100  # Setting player health to 100%
+player_x = WIDTH // 2 - player_width // 2
+player_y = HEIGHT - player_height
 
 # Hitbox adjustment for Player / Collison detection area for player / setting pixels
 player_hitbox_offset_x = 30
@@ -107,10 +108,6 @@ start_text = font.render("START", True, WHITE)
 start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 game_title = font.render("CLOUD DODGER", True, RED)
 game_title_rect = game_title.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-
-# Set up player
-player_x = WIDTH // 2 - player_width // 2
-player_y = HEIGHT - player_height
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
@@ -211,36 +208,38 @@ if os.path.isfile(music_path):
     except pygame.error:
         pass
 
-# Show last high score
+# Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
     screen.blit(high_score_text, (x, y))
 
-# Start game loop
+# Start game loop / constantly updating 
 while running:
-    for event in pygame.event.get():
+    for event in pygame.event.get(): # Iterates through all event queues
         if event.type == pygame.QUIT:
-            running = False
+            running = False # Closes out the Betty Dodger Game if a quit is detected 
 
-    keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed() # Gathers all current actions of the key binds that get touched by player
 
-    if keys[pygame.K_RIGHT]:
-        player_x += 5
-        betty_image = betty_right_image
-    elif keys[pygame.K_LEFT]:
-        player_x += -5
-        betty_image = betty_left_image
+    if keys[pygame.K_RIGHT]: # If Pressed the Betty right image Will render
+        player_x += 5 # Moves Betty 5 pixels to the right
+        betty_image = betty_right_image # Renders the Betty image to appear
+    elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
+        player_x += -5 # Moves Betty 5 pixels to the left
+        betty_image = betty_left_image # Renders the Betty image to appear
     else:
-        betty_image = betty_default_image
-        screen.blit(betty_image, (player_x, player_y))
+        betty_image = betty_default_image # If not keys are being touched
+        screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
 
-    player_x = max(0, min(player_x, WIDTH - player_width))
+    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going of screen
 
+    # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
     screen.fill(LIGHT_BLUE)
-
+    
+    # Caculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
+    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED) # Displays the Timer in Game
 
     # Render and blit the high score
     draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)

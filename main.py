@@ -97,17 +97,16 @@ for i in range(1): # Generates Seahorses for Extra Health Boost
     seahorse_y = random.randint(-500, 0)
     seahorse_list.append([seahorse_x, seahorse_y]) # append the seahorse to empty list
 
-# Main Menu Page / Using Pygame display Module
+# Main Menu Page
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Cloud Dodger") # Game Title
-gamemenu_image = pygame.image.load('graphics/gamemenu.png')
-gamemenu_image = pygame.transform.scale(gamemenu_image, (WIDTH, HEIGHT))
+gamemenu_image1 = pygame.image.load('graphics/menuscreen/MenuScreen1.png')
+gamemenu_image1 = pygame.transform.scale(gamemenu_image1, (WIDTH, HEIGHT))
+gamemenu_image2 = pygame.image.load('graphics/menuscreen/MenuScreen2.png')
+gamemenu_image2 = pygame.transform.scale(gamemenu_image2, (WIDTH, HEIGHT))
 
 # Main Menu Start button and Game Title
 start_text = font.render("START", True, WHITE)
 start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
-game_title = font.render("CLOUD DODGER", True, RED) # Game Title
-game_title_rect = game_title.get_rect(center=(WIDTH // 2, HEIGHT // 4))
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
@@ -153,13 +152,17 @@ while menu: # As long as it is set to true, it will control the menu events
     screen.blit(high_score_text, high_score_rect)
 
     # Draw Main Menu Screen
-    screen.blit(gamemenu_image, (0, 0))
+    background_counter += 1
+    if background_counter % 32 < 16: # half the time
+        screen.blit(gamemenu_image1, (0, 0))
+    else: # half the time
+        screen.blit(gamemenu_image2, (0, 0))
 
     # Flashing button image
-    button_counter += .5
-    if button_counter % 30 < 15:
-        start_button_image_rect = start_button_image.get_rect(center=start_button.center)
-        screen.blit(start_button_image, start_button_image_rect)  # Display the start button image
+    # button_counter += .5
+    # if button_counter % 30 < 15:
+        # start_button_image_rect = start_button_image.get_rect(center=start_button.center)
+        # screen.blit(start_button_image, start_button_image_rect)  # Display the start button image
 
     screen.blit(game_title, game_title_rect)
 

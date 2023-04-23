@@ -3,6 +3,7 @@ import random
 import sys
 import os
 from pygame import mixer
+import playsound
 
 #Initilizing pygame / sound mixer for custom audio clips 
 pygame.init()

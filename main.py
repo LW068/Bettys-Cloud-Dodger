@@ -8,7 +8,7 @@ from pygame import mixer
 pygame.init()
 mixer.init()
 
-# Screen dimensions
+# Setting Screen dimensions
 WIDTH = 800
 HEIGHT = 600
 
@@ -17,22 +17,23 @@ WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-# Player properties and dimensions
-player_width = 100
-player_height = 100
-player_health = 100  # Setting player health to 100%
-
-# Stores Highscore / converts to integer number 
+# Stores Highscore / converts to integer number / File Reader
 try:
     with open("high_score.txt", "r") as file:
         high_score = int(file.read())
 except FileNotFoundError:
     high_score = 0
 
+# Player properties and dimensions / Intializng Betty's positon on screen
+player_width = 100 # Set to 100 pixels 
+player_height = 100 # set to 100 pixels 
+player_health = 100  # Setting player health to 100%
+player_x = WIDTH // 2 - player_width // 2
+player_y = HEIGHT - player_height
 
 # Hitbox adjustment for Player / Collison detection area for player / setting pixels
-player_hitbox_offset_x = 30
-player_hitbox_offset_y = 30
+player_hitbox_offset_x = 30 # Offset the hitbox by 30 pixels Horizontally
+player_hitbox_offset_y = 30 # Offset the hitbox by 30 pixels Vertically
 player_hitbox_width = player_width - player_hitbox_offset_x
 player_hitbox_height = player_height - player_hitbox_offset_y
 
@@ -75,9 +76,9 @@ def draw_health_percentage(screen, health, x, y, font, color):
     screen.blit(health_percentage_text, (x, y))
 
 # Cloud Properties and Dimensions / Setting to the specified pixels
-cloud_width = 100
-cloud_height = 50
-cloud_list = [] # Initalizing an empty list / storing cloud objects 
+cloud_width = 100 # Set to 100 pixels
+cloud_height = 50 # Set to 50 pixels
+cloud_list = [] # Initalizing an empty list / storing cloud positions
 cloud_speed = 5 # Well says itself
 
 for i in range(5):  # Loop that iterates 5 times / creating 5 clouds
@@ -86,31 +87,27 @@ for i in range(5):  # Loop that iterates 5 times / creating 5 clouds
     cloud_list.append([cloud_x, cloud_y])
 
 # Seahorse properties and dimensions / setting pixels
-seahorse_width = 100
-seahorse_height = 100
-seahorse_list = [] # Initalizing an empty list / storing seahorse objects
-seahorse_speed = 3 
+seahorse_width = 100 # Set to 100 pixels
+seahorse_height = 100 # Set to 100 pixels
+seahorse_list = [] # Initalizing an empty list / storing seahorse positions
+seahorse_speed = 3 # Well says itself
 
 for i in range(1): # Generates Seahorses for Extra Health Boost
     seahorse_x = random.randint(0, WIDTH - cloud_width) # Generating random seahorses spawning but only within Game Window
     seahorse_y = random.randint(-500, 0)
-    seahorse_list.append([seahorse_x, seahorse_y])
+    seahorse_list.append([seahorse_x, seahorse_y]) # append the seahorse to empty list
 
 # Main Menu Page / Using Pygame display Module
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Cloud Dodger")
+pygame.display.set_caption("Cloud Dodger") # Game Title
 gamemenu_image = pygame.image.load('graphics/gamemenu.png')
 gamemenu_image = pygame.transform.scale(gamemenu_image, (WIDTH, HEIGHT))
 
 # Main Menu Start button and Game Title
 start_text = font.render("START", True, WHITE)
 start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
-game_title = font.render("CLOUD DODGER", True, RED)
+game_title = font.render("CLOUD DODGER", True, RED) # Game Title
 game_title_rect = game_title.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-
-# Set up player
-player_x = WIDTH // 2 - player_width // 2
-player_y = HEIGHT - player_height
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
@@ -123,6 +120,8 @@ betty_right_image = pygame.image.load('graphics/bettyright.png')
 betty_default_image = pygame.image.load("graphics/betty.png")
 seahorse_image = pygame.image.load('graphics/seahorse.png')
 start_button_image = pygame.image.load('graphics/startbutton.GIF')
+
+# Scale Images to specified pixel dimensions
 start_button_image = pygame.transform.scale(start_button_image, (150, 150))
 seahorse_image = pygame.transform.scale(seahorse_image, (200, 200))
 betty_image = pygame.transform.scale(betty_image, (100, 100))
@@ -146,16 +145,16 @@ cloud_images = [cloud_image1, cloud_image2, cloud_image3]
 i# Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
 
-menu = True
-running = False
+menu = True # initalizing menu variable and setting the value to True / controls menu display
+running = False # Initalizing running variable and setting value to False / controls game loop
 button_counter = 0
-while menu:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            menu = False
+while menu: # As long as it is set to true, it will control the menu events
+    for event in pygame.event.get(): # Iterating through all the events in the event queues
+        if event.type == pygame.QUIT: # Checks if window is closed
+            menu = False # if the window closes then set the menu to False to close application
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if start_button.collidepoint(event.pos):
+            if start_button.collidepoint(event.pos): # Checks if mouse clicks on start button
                 running = True
                 menu = False
 
@@ -178,11 +177,11 @@ while menu:
     clock.tick(60)
 
 # Default Cloud list
-cloud_list = []
-for i in range(5):
-    cloud_x = random.randint(0, WIDTH - cloud_width)
-    cloud_y = random.randint(-500, 0)
-    cloud_list.append([cloud_x, cloud_y])
+cloud_list = [] # Intializing empty list for storing cloud positions
+for i in range(5): # Creates positions for the 5 clouds
+    cloud_x = random.randint(0, WIDTH - cloud_width) # Spawns the cloud within the screen x axis
+    cloud_y = random.randint(-500, 0) # spawns the clouds above which is y axis off screen
+    cloud_list.append([cloud_x, cloud_y]) # stores the created 
 
 # Seahorse list
 seahorse_list = []
@@ -226,36 +225,38 @@ if os.path.isfile(music_path):
     except pygame.error:
         pass
 
-# Show last high score
+# Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
     screen.blit(high_score_text, (x, y))
 
-# Start game loop
+# Start game loop / constantly updating 
 while running:
-    for event in pygame.event.get():
+    for event in pygame.event.get(): # Iterates through all event queues
         if event.type == pygame.QUIT:
-            running = False
+            running = False # Closes out the Betty Dodger Game if a quit is detected 
 
-    keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed() # Gathers all current actions of the key binds that get touched by player
 
-    if keys[pygame.K_RIGHT]:
-        player_x += 5
-        betty_image = betty_right_image
-    elif keys[pygame.K_LEFT]:
-        player_x += -5
-        betty_image = betty_left_image
+    if keys[pygame.K_RIGHT]: # If Pressed the Betty right image Will render
+        player_x += 5 # Moves Betty 5 pixels to the right
+        betty_image = betty_right_image # Renders the Betty image to appear
+    elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
+        player_x += -5 # Moves Betty 5 pixels to the left
+        betty_image = betty_left_image # Renders the Betty image to appear
     else:
-        betty_image = betty_default_image
-        screen.blit(betty_image, (player_x, player_y))
+        betty_image = betty_default_image # If not keys are being touched
+        screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
 
-    player_x = max(0, min(player_x, WIDTH - player_width))
+    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going of screen
 
+    # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
     screen.fill(LIGHT_BLUE)
-
+    
+    # Caculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
+    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED) # Displays the Timer in Game
 
     # Render and blit the high score
     draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)

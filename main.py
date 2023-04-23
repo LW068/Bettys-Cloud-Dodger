@@ -60,24 +60,37 @@ def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color)
     screen.blit(health_percentage_text, (x, y))
 
+# Rain Cloud Properties 
+raincloud_width = 100
+raincloud_height = 100
+rain_speed = 3
+
+# Cloud List
+cloud_list = []
+rain_cloud_list = []
 
 # Cloud properties and dimensions
 cloud_width = 100
 cloud_height = 50
 cloud_list = []
 
-for i in range(5):  # creates 5 clouds
+for i in range(5):  # Spawns 5 non-raining clouds
     cloud_x = random.randint(0, WIDTH - cloud_width)
     cloud_y = random.randint(-500, 0)
     cloud_list.append([cloud_x, cloud_y])
 
 cloud_speed = 5
 
+for i in range(5):  # Spawns 5 raining clouds
+    rain_cloud_x = random.randint(0, WIDTH - cloud_width)
+    rain_cloud_y = random.randint(-500, 0)
+    rain_cloud_list.append([rain_cloud_x, rain_cloud_y])
+
+
 # Seahorse properties and dimenesion
 seahorse_width = 100
 seahorse_height = 100
 seahorse_list = []
-
 seahorse_speed = 3
 
 for i in range(1): # Generates 1 seahorse every 10 seconds for extra health boost
@@ -129,6 +142,16 @@ cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
+
+# Cloud Frame loader
+current_cloud_image_index = 0
+cloud_image1 = pygame.image.load('graphics/cloudgif/RainCloud1.png')
+cloud_image2 = pygame.image.load('graphics/cloudgif/RainCloud2.png')
+cloud_image3 = pygame.image.load('graphics/cloudgif/RainCloud3.png')
+cloud_image1 = pygame.transform.scale(cloud_image1, (100, 100))
+cloud_image2 = pygame.transform.scale(cloud_image2, (100, 100))
+cloud_image3 = pygame.transform.scale(cloud_image3, (100, 100))
+cloud_images = [cloud_image1, cloud_image2, cloud_image3]
 
 menu = True
 running = False
@@ -183,9 +206,14 @@ def check_collision(player, cloud):
 
 # Collison between Player and Seahorse 
 def check_collision_seahorse(player, seahorse):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y //2, player_hitbox_width, player_hitbox_height)
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     seahorse = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
     return player_hitbox.colliderect(seahorse)
+
+def check_collision_raincloud(player, raincloud):
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    raincloud = pygame.Rect(raincloud[0], raincloud[1], raincloud_width, raincloud_height)
+    return player_hitbox.collidedict(raincloud)
 
 
 # Set up game over text
@@ -227,6 +255,9 @@ while running:
 
     elapsed_time = pygame.time.get_ticks() - timer_start
     draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
+    
+    #Cloud image 
+    current_cloud_image_index = (elapsed_time // 500) % len(cloud_images)
 
     # Health Percentage Font
     percentage_font = pygame.font.Font(None, 32)
@@ -235,21 +266,28 @@ while running:
     draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
     # Health bar drawn + outline
 
-    # Move and draw clouds
+    # Move and draw non-raining clouds
     for cloud in cloud_list:
         cloud[1] += cloud_speed
-        if cloud[1] > HEIGHT:
-            cloud[0] = random.randint(0, WIDTH - cloud_width)
-            cloud[1] = random.randint(-500, 0)
+    if cloud[1] > HEIGHT:
+        cloud[0] = random.randint(0, WIDTH - cloud_width)
+        cloud[1] = random.randint(-500, 0)
+    screen.blit(cloud_image, (cloud[0], cloud[1]))
 
-        screen.blit(cloud_image, (cloud[0], cloud[1]))
+    # Move and draw raining clouds
+    for rain_cloud in rain_cloud_list:
+        rain_cloud[1] += cloud_speed
+    if rain_cloud[1] > HEIGHT:
+        rain_cloud[0] = random.randint(0, WIDTH - cloud_width)
+        rain_cloud[1] = random.randint(-500, 0)
+
     # Choose the cloud image based on elapsed time
     if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
-        current_cloud_image = cloud_image2
+        current_cloud_image = cloud_images[1]
     else:
-        current_cloud_image = cloud_image
+        current_cloud_image = cloud_images[current_cloud_image_index]
 
-    screen.blit(current_cloud_image, (cloud[0], cloud[1]))
+    screen.blit(current_cloud_image, (rain_cloud[0], rain_cloud[1]))
 
     # draw seahorse 
     for seahorse in seahorse_list:
@@ -282,6 +320,7 @@ while running:
     pygame.display.flip()
     clock.tick(60)
 
+    # GAME OVER SCREEN
 def game_over_screen():
     restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
     restart_text = font.render("RESTART", True, WHITE)
@@ -294,7 +333,7 @@ def game_over_screen():
                 if restart_button.collidepoint(event.pos):
                     return True
 
-        screen.blit(spaceimage, (0, 0))  # game over background
+        screen.blit(spaceimage, (0, 0))  # GAME OVER BACKGROUND
         screen.blit(game_over_text, game_over_rect)
         pygame.draw.rect(screen, RED, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)

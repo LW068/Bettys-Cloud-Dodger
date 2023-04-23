@@ -21,6 +21,8 @@ RED = (255, 0, 0)
 player_width = 100
 player_height = 100
 player_health = 100  # Setting player health to 100%
+
+# Stores Highscore / converts to integer number 
 try:
     with open("high_score.txt", "r") as file:
         high_score = int(file.read())
@@ -28,7 +30,7 @@ except FileNotFoundError:
     high_score = 0
 
 
-# Hitbox adjustment for Player / Collison detection area for player
+# Hitbox adjustment for Player / Collison detection area for player / setting pixels
 player_hitbox_offset_x = 30
 player_hitbox_offset_y = 30
 player_hitbox_width = player_width - player_hitbox_offset_x
@@ -39,16 +41,18 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
 font = pygame.font.Font(None, 22)
 
-# Set up clock
+# Set up clock / Controls game frame rate and track elapsed game time
 clock = pygame.time.Clock()
 
-# set up timer to count up
+# Define timer function / converting milliseconds to seconds /draw to screen
 def draw_timer(screen, elapsed_time, x, y, font, color):
     timer_text = font.render(f"{int(elapsed_time // 1000)}s", True, color)
     screen.blit(timer_text, (x + 80, y))
 
+# Starting point for elapsed timer
 timer_start = pygame.time.get_ticks()
 
+# Draws a health bar with an outline and filled portion based on the current health percentage of Betty.
 def draw_health_bar(screen, health, x, y, width, height, color):
     health_percentage = max(0, min(1, health / 100))
     # Drawing health bar outline
@@ -65,35 +69,34 @@ def draw_health_bar(screen, health, x, y, width, height, color):
 font = pygame.font.Font(None, 64)
 # Create a font for the health percentage
 percentage_font = pygame.font.Font(None, 32)
-
+    # Displays the health value as a percentage on the screen using a specified font and color.
 def draw_health_percentage(screen, health, x, y, font, color):
-    health_percentage_text = font.render(f"{health}%", True, color)
+    health_percentage_text = font.render(f"{health}%", True, color) # < creating the % SIGN
     screen.blit(health_percentage_text, (x, y))
 
-# Cloud Properties and Dimensions
+# Cloud Properties and Dimensions / Setting to the specified pixels
 cloud_width = 100
 cloud_height = 50
-cloud_list = []
+cloud_list = [] # Initalizing an empty list / storing cloud objects 
+cloud_speed = 5 # Well says itself
 
-for i in range(5):  # creates 5 clouds
-    cloud_x = random.randint(0, WIDTH - cloud_width)
+for i in range(5):  # Loop that iterates 5 times / creating 5 clouds
+    cloud_x = random.randint(0, WIDTH - cloud_width) # Generating random clouds spawning but only within Game Window
     cloud_y = random.randint(-500, 0)
     cloud_list.append([cloud_x, cloud_y])
 
-cloud_speed = 5
-
-# Seahorse properties and dimensions
+# Seahorse properties and dimensions / setting pixels
 seahorse_width = 100
 seahorse_height = 100
-seahorse_list = []
-seahorse_speed = 3
+seahorse_list = [] # Initalizing an empty list / storing seahorse objects
+seahorse_speed = 3 
 
 for i in range(1): # Generates Seahorses for Extra Health Boost
-    seahorse_x = random.randint(0, WIDTH - cloud_width)
+    seahorse_x = random.randint(0, WIDTH - cloud_width) # Generating random seahorses spawning but only within Game Window
     seahorse_y = random.randint(-500, 0)
     seahorse_list.append([seahorse_x, seahorse_y])
 
-# Main Menu Page
+# Main Menu Page / Using Pygame display Module
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cloud Dodger")
 gamemenu_image = pygame.image.load('graphics/gamemenu.png')

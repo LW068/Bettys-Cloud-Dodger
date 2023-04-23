@@ -309,7 +309,7 @@ while running:
     for cloud in cloud_list:
         cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rain):
-            player_health -= 1  # Decrease player health by 10
+            player_health -= 3  # Decrease player health by 
 
     if player_health <= 0:
         mixer.music.stop() #Stop theme music playing instantly

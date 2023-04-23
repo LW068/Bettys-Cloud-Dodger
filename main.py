@@ -130,6 +130,9 @@ cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
 
+# Image Loader 
+bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
+
 menu = True
 running = False
 button_counter = 0
@@ -269,6 +272,9 @@ while running:
             player_health -= 3  # Decrease player health by 10
 
     if player_health <= 0:
+        mixer.music.stop() #Stop theme music playing
+        bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
+        bettydeath_sound.play()
         running = False  # End the game if player health reaches 0% Health
 
     # Check for collison between Betty and Seahorse

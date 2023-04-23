@@ -274,7 +274,7 @@ while running:
     if player_health <= 0:
         mixer.music.stop() #Stop theme music playing
         bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
-        bettydeath_sound.play()
+        bettydeath_sound.play() # When Betty health hits 0%
         running = False  # End the game if player health reaches 0% Health
 
     # Check for collison between Betty and Seahorse

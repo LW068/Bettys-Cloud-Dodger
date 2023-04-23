@@ -136,6 +136,7 @@ bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
 
 menu = True # initalizing menu variable and setting the value to True / controls menu display
 running = False # Initalizing running variable and setting value to False / controls game loop
+background_counter = 0
 button_counter = 0
 while menu: # As long as it is set to true, it will control the menu events
     for event in pygame.event.get(): # Iterating through all the events in the event queues

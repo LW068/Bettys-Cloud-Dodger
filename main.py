@@ -217,27 +217,29 @@ def draw_high_score(screen, high_score, x, y, font, color):
 while running:
     for event in pygame.event.get(): # Iterates through all event queues
         if event.type == pygame.QUIT:
-            running = False
+            running = False # Closes out the Betty Dodger Game if a quit is detected 
 
-    keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed() # Gathers all current actions of the key binds that get touched by player
 
-    if keys[pygame.K_RIGHT]:
-        player_x += 5
-        betty_image = betty_right_image
-    elif keys[pygame.K_LEFT]:
-        player_x += -5
-        betty_image = betty_left_image
+    if keys[pygame.K_RIGHT]: # If Pressed the Betty right image Will render
+        player_x += 5 # Moves Betty 5 pixels to the right
+        betty_image = betty_right_image # Renders the Betty image to appear
+    elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
+        player_x += -5 # Moves Betty 5 pixels to the left
+        betty_image = betty_left_image # Renders the Betty image to appear
     else:
-        betty_image = betty_default_image
-        screen.blit(betty_image, (player_x, player_y))
+        betty_image = betty_default_image # If not keys are being touched
+        screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
 
-    player_x = max(0, min(player_x, WIDTH - player_width))
+    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going of screen
 
+    # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
     screen.fill(LIGHT_BLUE)
-
+    
+    # Caculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED)
+    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED) # Displays the Timer in Game
 
     # Render and blit the high score
     draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)

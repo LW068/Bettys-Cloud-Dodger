@@ -232,6 +232,7 @@ while running:
     percentage_font = pygame.font.Font(None, 32)
 
     draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
+    player_health = min(player_health, 100) # Make sure health doesn't exceed 100% on health bar
     draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
     # Health bar drawn + outline
 

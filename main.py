@@ -165,7 +165,7 @@ while menu: # As long as it is set to true, it will control the menu events
         # start_button_image_rect = start_button_image.get_rect(center=start_button.center)
         # screen.blit(start_button_image, start_button_image_rect)  # Display the start button image
 
-    screen.blit(game_title, game_title_rect)
+    # screen.blit(game_title, game_title_rect)
 
     pygame.display.flip()
     clock.tick(60)

@@ -370,18 +370,18 @@ def game_over_screen():
     
     # Define the list of credits
     credits_list = [
-        "Game Design: John Smith",
-        "Programming: Jane Doe",
-        "Artwork: Sarah Johnson",
-        "Music and Sound Effects: Michael Brown",
-        "Special Thanks: Our Kickstarter Backers"
+        "Game Design: Mico, Ricardo, Dennis",
+        "Programming: Mico, Dennis",
+        "Artwork: Ricardo",
+        "Music and Sound Effects: Ricardo, Dennis, Mico",
+        "Special Thanks: Our Hightech Brains"
     ]
 
     # Calculate the height of each credit line
     credit_height = font.get_height() + 5
 
     # Calculate the starting position of the credits
-    credit_y = HEIGHT + 10
+    credit_y = HEIGHT + 20
 
     while True:
         for event in pygame.event.get():
@@ -417,31 +417,6 @@ def game_over_screen():
 
         pygame.display.flip()
         clock.tick(FPS)
-
-
-"""
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if restart_button_rect.collidepoint(event.pos):
-                    return True
-
-        background_counter += 1  # Update the counter            
-
-        # Flicker the game over background using the counter
-        if background_counter % 32 < 16:
-            screen.blit(end_image1, (0, 0))
-        else:
-            screen.blit(end_image2, (0, 0))
-
-        screen.blit(game_over_text, game_over_rect)
-        screen.blit(restart_button, restart_button_rect)
-
-        pygame.display.flip()
-        clock.tick(FPS)
-"""
 
 # Show the "Game Over" screen
 restart = game_over_screen()

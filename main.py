@@ -174,7 +174,7 @@ while menu: # As long as it is set to true, it will control the menu events
 
     # Draw Main Menu Screen
     background_counter += 1
-    if background_counter % 32 < 16: # half the time
+    if background_counter % 40 < 20: # half the time
         screen.blit(gamemenu_image1, (0, 0))
     else: # half the time
         screen.blit(gamemenu_image2, (0, 0))

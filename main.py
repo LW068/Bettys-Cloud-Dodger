@@ -375,7 +375,7 @@ def game_over_screen():
                 if restart_button_rect.collidepoint(event.pos):
                     return True
 
-        background_counter += 0  # counter  
+        background_counter += 1  # counter  
 
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:
@@ -446,7 +446,7 @@ def game_over_screen():
 """
 
 # Show the "Game Over" screen
-restart = game_over_screen()
+restart = game_over_screen(background_counter)
 
 if restart:
     # If the player chose to restart, run the script again

@@ -297,17 +297,20 @@ while running:
     # Determine which background image and music to use based on elapsed_time
     if elapsed_time < 10000:
         current_background = normal_background
-        if not mixer.music.get_busy():
+        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+            mixer.music.stop()
             mixer.music.load(main_theme)
             mixer.music.play(-1)
     elif elapsed_time < 20000:
         current_background = rain_background
-        if not mixer.music.get_busy():
+        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+            mixer.music.stop()
             mixer.music.load(rain_theme)
             mixer.music.play(-1)
     else:
         current_background = thunder_background
-        if not mixer.music.get_busy():
+        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+            mixer.music.stop()
             mixer.music.load(thunder_theme)
             mixer.music.play(-1)
 

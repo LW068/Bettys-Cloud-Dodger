@@ -153,6 +153,21 @@ end_theme = 'audios/BettysCloudDodgerEndCredits.mp3'
 rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
 thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
 
+# In-Game Backgrounds Loader
+LIGHT_BLUE = (173, 216, 230)
+screen.fill(LIGHT_BLUE)
+normal_background = pygame.image.load("graphics/normalbackground.jpeg")
+rain_background = pygame.image.load("graphics/rainbackground.jpeg")
+thunder_background = pygame.image.load("graphics/thunderbackground.jpeg")
+normal_background = pygame.transform.scale(normal_background, (WIDTH, HEIGHT))
+rain_background = pygame.transform.scale(rain_background, (WIDTH, HEIGHT))
+thunder_background = pygame.transform.scale(thunder_background, (WIDTH, HEIGHT))
+
+# Background Scrolling Settings
+background_y1 = 0
+background_y2 = -HEIGHT
+background_speed = 2
+
 # Game Menu Music for START SCREEN
 if os.path.isfile(main_theme):
     try:
@@ -280,9 +295,22 @@ while running:
     
     player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going off screen
 
-    # In Game Background Filler
-    LIGHT_BLUE = (173, 216, 230)
-    screen.fill(LIGHT_BLUE)
+
+    # Determine which background image to use based on elapsed_time
+    if elapsed_time < 10000:
+        current_background = normal_background
+    elif elapsed_time < 20000:
+        current_background = rain_background
+    else:
+        current_background = thunder_background
+
+    # Update the background image positions and draw them # This will make the background image scroll vertically and loop 
+    background_y1 = (background_y1 + background_speed) % HEIGHT
+    background_y2 = (background_y2 + background_speed) % HEIGHT
+
+    screen.blit(current_background, (0, background_y1))
+    screen.blit(current_background, (0, background_y2))
+    
     
     # Calculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start

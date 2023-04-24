@@ -384,7 +384,7 @@ def game_over_screen():
         # move the end credits
         credits_y -= credits_speed
         if credits_y < -len(credits) * 40:
-            credits_y = height + 10
+            credits_y = height + 10:
           
 
         # Flicker the game over background using the counter

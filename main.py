@@ -16,7 +16,7 @@ HEIGHT = 600
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
-BACKGROUND_COLOR = (0, 0, 0)
+INVISIBLE = (0, 0, 0, 1)
 
 # Stores Highscore / converts to integer number / File Reader
 try:
@@ -326,7 +326,8 @@ while running:
     clock.tick(FPS)
 
 def game_over_screen():
-    restart_button = pygame.Rect(800 // 2 - 100, HEIGHT // 2.7, 200, 70,)
+    restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
+    restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
     restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
@@ -336,7 +337,7 @@ def game_over_screen():
             if event.type == pygame.QUIT:
                 return False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if restart_button.collidepoint(event.pos):
+                if restart_button_rect.collidepoint(event.pos):
                     return True
 
         background_counter += 1  # Update the counter            
@@ -348,9 +349,7 @@ def game_over_screen():
             screen.blit(end_image2, (0, 0))
 
         screen.blit(game_over_text, game_over_rect)
-        pygame.draw.rect(screen, BACKGROUND_COLOR, restart_button)
-        restart_text_rect = restart_text.get_rect(center=restart_button.center)
-        screen.blit(restart_text, restart_text_rect)
+        screen.blit(restart_button, restart_button_rect)
 
         pygame.display.flip()
         clock.tick(FPS)

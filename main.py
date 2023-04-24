@@ -476,7 +476,7 @@ def game_over_screen():
             screen.blit(end_image2, (0, 0))
 
         screen.blit(game_over_text, game_over_rect)
-        #screen.blit(restart_button, restart_button_rect)
+        screen.blit(restart_button_rect)
 
         # display credits
         for credit_surface in credit_surfaces:

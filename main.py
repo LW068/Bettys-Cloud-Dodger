@@ -441,7 +441,7 @@ def game_over_screen():
         clock.tick(FPS)
 
 # Show the "Game Over" screen
-restart = game_over_screen(background_counter)
+restart = game_over_screen()
 
 if restart:
     # If the player chose to restart, run the script again

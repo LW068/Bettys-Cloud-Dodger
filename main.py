@@ -267,6 +267,11 @@ def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"HIGH SCORE: {int(high_score)}", True, color)
     screen.blit(high_score_text, (x, y))
 
+# Initialize a variable to keep track of the current music
+    current_music = main_theme
+    mixer.music.load(current_music)
+    mixer.music.play(-1)
+
 # Start Game loop / constantly updating 
 while running:
     for event in pygame.event.get(): # Iterates through all event queues
@@ -293,9 +298,6 @@ while running:
     
     betty_x = max(0, min(betty_x, WIDTH - betty_width)) # Prevents Betty from going off screen
 
-
-    # Initialize a variable to keep track of the current music
-    current_music = None
 
     # Determine which background image and music to use based on elapsed_time
     if elapsed_time < 10000:

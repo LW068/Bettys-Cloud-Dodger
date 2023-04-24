@@ -48,7 +48,7 @@ clock = pygame.time.Clock()
 
 # Define timer function / converting milliseconds to seconds /draw to screen
 def draw_timer(screen, elapsed_time, x, y, font, color):
-    timer_text = font.render(f"{int(elapsed_time // 1000)}s", True, color)
+    timer_text = font.render(f"SCORE: {int(elapsed_time // 1000)}", True, color)
     screen.blit(timer_text, (x + 80, y))
 
 # Starting point for elapsed timer
@@ -151,7 +151,7 @@ while menu: # As long as it is set to true, it will control the menu events
                 running = True
                 menu = False
 
-    high_score_text = font.render(f"High Score: {high_score}s", True, WHITE)
+    high_score_text = font.render(f"HIGH SCORE: {high_score}", True, WHITE)
     high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 75))
     screen.blit(high_score_text, high_score_rect)
 
@@ -219,7 +219,7 @@ if os.path.isfile(music_path):
 
 # Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
-    high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
+    high_score_text = font.render(f"HIGH SCORE: {int(high_score)}", True, color)
     screen.blit(high_score_text, (x, y))
 
 # Start game loop / constantly updating 

@@ -136,7 +136,17 @@ end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
 end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
 
 
-# Sound Loader 
+# Cloud Frame loader
+current_cloud_image_index = 0
+cloud_image1 = pygame.image.load('graphics/cloudgif/RainCloud1.png')
+cloud_image2 = pygame.image.load('graphics/cloudgif/RainCloud2.png')
+cloud_image3 = pygame.image.load('graphics/cloudgif/RainCloud3.png')
+cloud_image1 = pygame.transform.scale(cloud_image1, (100, 100))
+cloud_image2 = pygame.transform.scale(cloud_image2, (100, 100))
+cloud_image3 = pygame.transform.scale(cloud_image3, (100, 100))
+cloud_images = [cloud_image1, cloud_image2, cloud_image3]
+
+i# Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
 music_path = 'audios/gamemusic.mp3'
 
@@ -206,12 +216,17 @@ def check_collision(player, cloud):
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return player_hitbox.colliderect(cloud_rect)
 
+# Collisions between player and rainclouds
+def check_collision(player, raincloud):
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+    return player_hitbox.colliderect(cloud_rain)
+
 # Collison between Player and Seahorse 
 def check_collision_seahorse(player, seahorse):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y //2, player_hitbox_width, player_hitbox_height)
     seahorse = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
     return player_hitbox.colliderect(seahorse)
-
 
 # Set up Game Over text
 game_over_text = font.render("", True, RED)
@@ -310,8 +325,15 @@ while running:
         if check_collision(player_rect, cloud_rect):
             player_health -= 3  # Decrease player health by 10
 
+    # Check for collision between rainClouds and Betty
+    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    for cloud in cloud_list:
+        cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+        if check_collision(player_rect, cloud_rain):
+            player_health -= 3  # Decrease player health by 
+
     if player_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
-        mixer.music.stop() # Stop theme music playing instantly
+        mixer.music.stop() #Stop theme music playing instantly
         bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
         bettydeath_sound.play() # When Betty's health hits 0%
         running = False  # End the game if player health reaches 0% Health
@@ -332,7 +354,7 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
-
+    
 def game_over_screen():
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
@@ -370,3 +392,4 @@ if restart:
     os.execv(sys.executable, ['python'] + sys.argv)
 else:
     pygame.quit()
+

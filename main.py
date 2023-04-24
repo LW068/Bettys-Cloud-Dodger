@@ -380,13 +380,7 @@ def game_over_screen():
         credits_y = height + 10
         credits_speed = 1
         credits_rect = pygame.Rect(0, height - 100, width, 100)
-
-        # move the end credits
-        credits_y -= credits_speed
-        if credits_y < -len(credits) * 40:
-            credits_y = height + 10:
-          
-
+        
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:
             screen.blit(end_image1, (0, 0))
@@ -402,6 +396,10 @@ def game_over_screen():
 # Show the "Game Over" screen
 restart = game_over_screen()
 
+# move the end credits
+credits_y -= credits_speed
+if credits_y < -len(credits) * 40:
+    credits_y = height + 10
 if restart:
     # If the player chose to restart, run the script again
     os.execv(sys.executable, ['python'] + sys.argv)

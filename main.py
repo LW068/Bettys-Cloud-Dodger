@@ -3,6 +3,7 @@ import random
 import sys
 import os
 from pygame import mixer
+import pep8
 
 #Initializing pygame / sound mixer for custom audio clips 
 pygame.init()
@@ -385,11 +386,11 @@ credit_y = HEIGHT + 10
 
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if restart_button_rect.collidepoint(event.pos):
-                return True
+            if event.type == pygame.QUIT:
+                return False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button_rect.collidepoint(event.pos):
+                    return True
 
     background_counter += 1  # Update the counter            
 

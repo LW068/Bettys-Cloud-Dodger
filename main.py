@@ -111,8 +111,8 @@ start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
-spaceimage = pygame.image.load('graphics/spaceimage.png')
-space_image = pygame.image.load('graphics/spaceimage.png')
+end_image1 = pygame.image.load('graphics/endscreen/end_screen1.png')
+end_image2 = pygame.image.load('graphics/endscreen/end_screen2.png')
 cloud_image = pygame.image.load('graphics/cloudimage.png')
 cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
 betty_left_image = pygame.image.load('graphics/bettyleft.png')
@@ -130,7 +130,9 @@ betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
-spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
+end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
+end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
+
 
 # Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
@@ -322,6 +324,8 @@ def game_over_screen():
     restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
     restart_text = font.render("RESTART", True, WHITE)
 
+    background_counter = 0  # Line to initialize the counter for screen flickering
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -330,7 +334,14 @@ def game_over_screen():
                 if restart_button.collidepoint(event.pos):
                     return True
 
-        screen.blit(spaceimage, (0, 0))  # game over background
+        background_counter += 1  # Update the counter            
+
+        # Flicker the game over background using the counter
+        if background_counter % 32 < 16:
+            screen.blit(end_image1, (0, 0))
+        else:
+            screen.blit(end_image2, (0, 0))
+
         screen.blit(game_over_text, game_over_rect)
         pygame.draw.rect(screen, RED, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)

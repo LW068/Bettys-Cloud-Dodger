@@ -40,14 +40,15 @@ player_hitbox_height = player_height - player_hitbox_offset_y
 #Timer Font size / Dimensions
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
-font = pygame.font.Font(None, 22)
+font_path = "fonts/press-start-2p.regular.ttf"  # Custom TTF file name
+font = pygame.font.Font(font_path, 18)
 
 # Set up clock / Controls game frame rate and track elapsed game time
 clock = pygame.time.Clock()
 
 # Define timer function / converting milliseconds to seconds /draw to screen
 def draw_timer(screen, elapsed_time, x, y, font, color):
-    timer_text = font.render(f"{int(elapsed_time // 1000)}s", True, color)
+    timer_text = font.render(f"SCORE: {int(elapsed_time // 1000)}", True, color)
     screen.blit(timer_text, (x + 80, y))
 
 # Starting point for elapsed timer
@@ -67,9 +68,9 @@ def draw_health_bar(screen, health, x, y, width, height, color):
             height - 4))  # Drawing health bar filled
     
 # Health percentage FONT
-font = pygame.font.Font(None, 64)
+font = pygame.font.Font(font_path, 12)
 # Create a font for the health percentage
-percentage_font = pygame.font.Font(None, 32)
+percentage_font = pygame.font.Font(font_path, 12)
     # Displays the health value as a percentage on the screen using a specified font and color.
 def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color) # < creating the % SIGN
@@ -110,6 +111,8 @@ start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
+end_image1 = pygame.image.load('graphics/endscreen/end_screen1.png')
+end_image2 = pygame.image.load('graphics/endscreen/end_screen2.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
 cloud_image = pygame.image.load('graphics/cloudimage.png')
 cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
@@ -128,7 +131,9 @@ betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
-spaceimage = pygame.transform.scale(spaceimage, (WIDTH, HEIGHT))
+end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
+end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
+
 
 # Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
@@ -147,7 +152,7 @@ while menu: # As long as it is set to true, it will control the menu events
                 running = True
                 menu = False
 
-    high_score_text = font.render(f"High Score: {high_score}s", True, WHITE)
+    high_score_text = font.render(f"HIGH SCORE: {high_score}", True, WHITE)
     high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 75))
     screen.blit(high_score_text, high_score_rect)
 
@@ -207,7 +212,7 @@ if os.path.isfile(music_path):
 
 # Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
-    high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
+    high_score_text = font.render(f"HIGH SCORE: {int(high_score)}", True, color)
     screen.blit(high_score_text, (x, y))
 
 # Start Game loop / constantly updating 
@@ -246,7 +251,7 @@ while running:
         file.write(str(high_score))
 
     # Health Percentage Font
-    percentage_font = pygame.font.Font(None, 32)
+    percentage_font = pygame.font.Font(font_path, 12)
 
     draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
     player_health = min(player_health, 100) # Make sure health doesn't exceed 100% on health bar
@@ -312,6 +317,8 @@ def game_over_screen():
     restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
     restart_text = font.render("RESTART", True, WHITE)
 
+    background_counter = 0  # Line to initialize the counter for screen flickering
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -320,7 +327,14 @@ def game_over_screen():
                 if restart_button.collidepoint(event.pos):
                     return True
 
-        screen.blit(spaceimage, (0, 0))  # Draws Game over background
+        background_counter += 1  # Update the counter            
+
+        # Flicker the game over background using the counter
+        if background_counter % 32 < 16:
+            screen.blit(end_image1, (0, 0))
+        else:
+            screen.blit(end_image2, (0, 0))
+
         screen.blit(game_over_text, game_over_rect)
         pygame.draw.rect(screen, RED, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)

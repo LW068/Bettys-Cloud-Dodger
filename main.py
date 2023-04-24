@@ -372,7 +372,7 @@ def game_over_screen():
     # start credits at the bottom of the screen
     credit_y = HEIGHT
 
-    background_counter += 0  # Line to initialize the counter for screen flickering
+    background_counter += 1  # Line to initialize the counter for screen flickering
 
 
     while True:

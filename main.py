@@ -122,6 +122,7 @@ betty_right_image = pygame.image.load('graphics/bettyright.png')
 betty_default_image = pygame.image.load("graphics/betty.png")
 seahorse_image = pygame.image.load('graphics/seahorse.png')
 start_button_image = pygame.image.load('graphics/startbutton.GIF')
+thunder_cloud = pygame.image.load('graphics/ThunderCloud.png')
 
 # Scale Images to specified pixel dimensions
 start_button_image = pygame.transform.scale(start_button_image, (150, 150))
@@ -304,9 +305,16 @@ while running:
 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     
-    # Rain Cloud Spawns 30 Seconds in game
+    # Rain Cloud Spawns 10 Seconds into game - RAIN PHASE SPAWN
     if elapsed_time >= 10000:  # 10 seconds * 1000 milliseconds
         cloud_image = cloud_image1
+
+    for cloud in cloud_list: 
+        screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
+    
+    # Thunder Cloud Spawns 20 Seconds into game - THUNDER PHASE SPAWN
+    if elapsed_time >= 20000:  # 20 seconds * 1000 milliseconds
+        cloud_image = thunder_cloud
 
     for cloud in cloud_list: 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen

@@ -243,9 +243,9 @@ def check_collision(betty, raincloud):
 
 # Collisions between player and thunder clouds - THUNDER PHASE DEFINITION
 def check_collision(player, thundercloud):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    betty_hitbox = pygame.Rect(player[0] + betty_hitbox_offset_x // 2, player[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-    return player_hitbox.colliderect(cloud_thunder)
+    return betty_hitbox.colliderect(cloud_thunder)
 
 # Collison between Betty and Seahorse 
 def check_collision_seahorse(betty, seahorse):

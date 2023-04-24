@@ -4,7 +4,7 @@ import sys
 import os
 from pygame import mixer
 
-#Initilizing pygame / sound mixer for custom audio clips 
+#Initializing pygame / sound mixer for custom audio clips 
 pygame.init()
 mixer.init()
 

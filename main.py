@@ -381,7 +381,7 @@ def game_over_screen():
     credit_height = font.get_height() + 5
 
     # Calculate the starting position of the credits
-    credit_y = HEIGHT + 100
+    credit_y = HEIGHT + 15
 
     while True:
         for event in pygame.event.get():
@@ -403,7 +403,7 @@ def game_over_screen():
         screen.blit(restart_button, restart_button_rect)
 
         # Move the credits up the screen
-        credit_y -= 1
+        credit_y += 1
 
         # Display each line of the credits
         for i, credit in enumerate(credits_list):

@@ -375,7 +375,7 @@ def game_over_screen():
                 if restart_button_rect.collidepoint(event.pos):
                     return True
 
-        background_counter += 1  # counter  
+        background_counter += 0  # counter  
 
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:

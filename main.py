@@ -356,6 +356,18 @@ while running:
     clock.tick(FPS)
     
 def game_over_screen():
+
+    # existing code for game over screen
+
+    # create list of credits to display
+    credits = ["Credits:", "Game created by John Doe", "Artwork by Jane Smith", "Music by Joe Brown"]
+
+    # create text surfaces for each credit line
+    credit_surfaces = [font.render(credit, True, WHITE) for credit in credits]
+
+    # start credits at the bottom of the screen
+    credit_y = HEIGHT
+    
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
     restart_text = font.render("", True, WHITE)

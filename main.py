@@ -226,10 +226,10 @@ while running:
         player_x += -5 # Moves Betty 5 pixels to the left
         betty_image = betty_left_image # Renders the Betty image to appear
     else:
-        betty_image = betty_default_image # If not keys are being touched
+        betty_image = betty_default_image # If no keys are being touched
         screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
 
-    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going of screen
+    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going off screen
 
     # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
@@ -239,7 +239,7 @@ while running:
     elapsed_time = pygame.time.get_ticks() - timer_start
     draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED) # Displays the Timer in Game
 
-    # Render and blit the high score
+    # Render and Displays the high score
     draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)
 
     #High Score
@@ -255,9 +255,9 @@ while running:
     # Health bar drawn + outline
 
     # Spawn and Render Cloud Blit
-    for cloud in cloud_list:
-        cloud[1] += cloud_speed
-        if cloud[1] > HEIGHT:
+    for cloud in cloud_list: # Iterates through each cloud in the cloud list
+        cloud[1] += cloud_speed # increases the y coordinate to make the cloud move vertically downwards 
+        if cloud[1] > HEIGHT: # 
             cloud[0] = random.randint(0, WIDTH - cloud_width)
             cloud[1] = random.randint(-500, 0)
 

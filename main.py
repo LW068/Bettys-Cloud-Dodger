@@ -146,14 +146,17 @@ cloud_image2 = pygame.transform.scale(cloud_image2, (100, 100))
 cloud_image3 = pygame.transform.scale(cloud_image3, (100, 100))
 cloud_images = [cloud_image1, cloud_image2, cloud_image3]
 
-i# Sound Loader 
+# Soundtrack and Audios Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
-music_path = 'audios/gamemusic.mp3'
+main_theme = 'audios/BettysCloudDodgerMainTheme.mp3'
+end_theme = 'audios/BettysCloudDodgerEndCredits.mp3'
+rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
+thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
 
 # Game Menu Music for START SCREEN
-if os.path.isfile(music_path):
+if os.path.isfile(main_theme):
     try:
-        mixer.music.load(music_path)
+        mixer.music.load(main_theme)
         mixer.music.play(-1)
         print("Music started playing.")
     except pygame.error as e:
@@ -232,9 +235,9 @@ def check_collision_seahorse(player, seahorse):
 game_over_text = font.render("", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
 
-if os.path.isfile(music_path):
+if os.path.isfile(main_theme):
     try:
-        mixer.music.load(music_path)
+        mixer.music.load(main_theme)
         mixer.music.play(-1)
     except pygame.error:
         pass
@@ -356,6 +359,9 @@ while running:
     clock.tick(FPS)
     
 def game_over_screen():
+    mixer.music.load(end_theme)
+    mixer.music.play(-1) # # Loop the music indefinitely
+    
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
     restart_text = font.render("", True, WHITE)

@@ -16,6 +16,7 @@ HEIGHT = 600
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
+BACKGROUND_COLOR = (0, 0, 0)
 
 # Stores Highscore / converts to integer number / File Reader
 try:
@@ -67,10 +68,10 @@ def draw_health_bar(screen, health, x, y, width, height, color):
          (width - 4) * health_percentage,
             height - 4))  # Drawing health bar filled
     
-# Health percentage FONT
-font = pygame.font.Font(font_path, 12)
+# Game Score / Current Score Font
+font = pygame.font.Font(font_path, 11)
 # Create a font for the health percentage
-percentage_font = pygame.font.Font(font_path, 12)
+percentage_font = pygame.font.Font(font_path, 15)
     # Displays the health value as a percentage on the screen using a specified font and color.
 def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color) # < creating the % SIGN
@@ -153,7 +154,7 @@ while menu: # As long as it is set to true, it will control the menu events
                 menu = False
 
     high_score_text = font.render(f"HIGH SCORE: {high_score}", True, WHITE)
-    high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 75))
+    high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 5))
     screen.blit(high_score_text, high_score_rect)
 
     # Draw Main Menu Screen
@@ -198,7 +199,7 @@ def check_collision_seahorse(player, seahorse):
 
 
 # Set up Game Over text
-game_over_text = font.render("GAME OVER", True, RED)
+game_over_text = font.render("", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
 
 music_path = 'audios/gamemusic.mp3'
@@ -241,10 +242,10 @@ while running:
     
     # Caculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
-    draw_timer(screen, elapsed_time, WIDTH - 180, 10, font, RED) # Displays the Timer in Game
+    draw_timer(screen, elapsed_time, WIDTH - 200, 10, font, RED) # Displays the Timer in Game
 
     # Render and Displays the high score
-    draw_high_score(screen, high_score, WIDTH - 500, - 2, font, BLUE)
+    draw_high_score(screen, high_score, WIDTH - 500, 10, font, BLUE)
 
     #High Score
     with open("high_score.txt", "w") as file:
@@ -314,8 +315,8 @@ while running:
     clock.tick(60)
 
 def game_over_screen():
-    restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
-    restart_text = font.render("RESTART", True, WHITE)
+    restart_button = pygame.Rect(800 // 2 - 100, HEIGHT // 2.7, 200, 70,)
+    restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
 
@@ -336,7 +337,7 @@ def game_over_screen():
             screen.blit(end_image2, (0, 0))
 
         screen.blit(game_over_text, game_over_rect)
-        pygame.draw.rect(screen, RED, restart_button)
+        pygame.draw.rect(screen, BACKGROUND_COLOR, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)
         screen.blit(restart_text, restart_text_rect)
 

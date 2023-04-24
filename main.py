@@ -401,7 +401,7 @@ def game_over_screen(background_counter):
         pygame.display.flip()
         clock.tick(FPS)
 """ 
-  
+"""  
 def game_over_screen():
 
     # create list of credits to display
@@ -446,6 +446,53 @@ def game_over_screen():
 
         pygame.display.flip()
         clock.tick(FPS)
+"""
+def game_over_screen():
+    # create list of credits to display
+    credits = ["Credits:", "Game created by John Doe", "Artwork by Jane Smith", "Music by Joe Brown"]
+
+    # create text surfaces for each credit line
+    credit_surfaces = [font.render(credit, True, WHITE) for credit in credits]
+
+    # start credits at the bottom of the screen
+    credit_y = HEIGHT
+
+    # load restart button image
+    restart_button = pygame.image.load("restart_button.png").convert_alpha()
+    restart_button_rect = restart_button.get_rect(center=(WIDTH/2, HEIGHT - 100))
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button_rect.collidepoint(event.pos):
+                    return True
+
+        # Flicker the game over background using the counter
+        if pygame.time.get_ticks() % 1000 < 500:
+            screen.blit(end_image1, (0, 0))
+        else:
+            screen.blit(end_image2, (0, 0))
+
+        screen.blit(game_over_text, game_over_rect)
+        screen.blit(restart_button, restart_button_rect)
+
+        # display credits
+        for credit_surface in credit_surfaces:
+            screen.blit(credit_surface, (WIDTH/2 - credit_surface.get_width()/2, credit_y))
+            credit_y += 50  # space between each credit line
+
+        # scroll credits up
+        credit_y -= 1
+
+        # if credits have scrolled off the top, return to main game loop
+        if credit_y < -50 * len(credits):
+            return False        
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
 
 # Show the "Game Over" screen
 restart = game_over_screen()

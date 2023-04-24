@@ -134,7 +134,7 @@ cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
 end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
-thunder_cloud = pygame.transform.scale(cloud_image1, (100, 100))
+thunder_cloud = pygame.transform.scale(thunder_cloud, (100, 100))
 
 # Cloud Frame loader
 current_cloud_image_index = 0

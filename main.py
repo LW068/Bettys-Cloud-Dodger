@@ -26,17 +26,17 @@ except FileNotFoundError:
     high_score = 0
 
 # Player properties and dimensions / Intializng Betty's positon on screen
-player_width = 100 # Set to 100 pixels 
-player_height = 100 # set to 100 pixels 
-player_health = 100  # Setting player health to 100%
-player_x = WIDTH // 2 - player_width // 2
-player_y = HEIGHT - player_height
+betty_width = 100 # Set to 100 pixels 
+betty_height = 100 # set to 100 pixels 
+betty_health = 100  # Setting player health to 100%
+betty_x = WIDTH // 2 - betty_width // 2
+betty_y = HEIGHT - betty_height
 
 # Hitbox adjustment for Player / Collison detection area for player / setting pixels
-player_hitbox_offset_x = 30 # Offset the hitbox by 30 pixels Horizontally
-player_hitbox_offset_y = 30 # Offset the hitbox by 30 pixels Vertically
-player_hitbox_width = player_width - player_hitbox_offset_x
-player_hitbox_height = player_height - player_hitbox_offset_y
+betty_hitbox_offset_x = 30 # Offset the hitbox by 30 pixels Horizontally
+betty_hitbox_offset_y = 30 # Offset the hitbox by 30 pixels Vertically
+betty_hitbox_width = betty_width - betty_hitbox_offset_x
+betty_hitbox_height = betty_height - betty_hitbox_offset_y
 
 #Timer Font size / Dimensions
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -209,27 +209,27 @@ for i in range(1): # creates positions for 1 seahorse
     seahorse_y = random.randint(-500 , 0 ) # spawns the seahorse above which is y axis off screen
     seahorse_list.append([seahorse_x, seahorse_y]) # appends the created seahorse to the seahorse list
 
-# Set up player
-player_x = WIDTH // 2 - player_width // 2
-player_y = HEIGHT - player_height
+# Set up Betty
+betty_x = WIDTH // 2 - betty_width // 2
+betty_y = HEIGHT - betty_height
 
-# Collisions between player and clouds
-def check_collision(player, cloud):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+# Collisions between Betty and clouds
+def check_collision(betty, cloud):
+    betty_hitbox = pygame.Rect(betty[0] + betty_hitbox_offset_x // 2, betty[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-    return player_hitbox.colliderect(cloud_rect)
+    return betty_hitbox.colliderect(cloud_rect)
 
-# Collisions between player and rainclouds
-def check_collision(player, raincloud):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+# Collisions between Betty and rainclouds
+def check_collision(betty, raincloud):
+    betty_hitbox = pygame.Rect(betty[0] + betty_hitbox_offset_x // 2, betty[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-    return player_hitbox.colliderect(cloud_rain)
+    return betty_hitbox.colliderect(cloud_rain)
 
-# Collison between Player and Seahorse 
-def check_collision_seahorse(player, seahorse):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y //2, player_hitbox_width, player_hitbox_height)
+# Collison between Betty and Seahorse 
+def check_collision_seahorse(betty, seahorse):
+    betty_hitbox = pygame.Rect(betty[0] + betty_hitbox_offset_x // 2, betty[1] + betty_hitbox_offset_y //2, betty_hitbox_width, betty_hitbox_height)
     seahorse = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
-    return player_hitbox.colliderect(seahorse)
+    return betty_hitbox.colliderect(seahorse)
 
 # Set up Game Over text
 game_over_text = font.render("", True, RED)
@@ -256,14 +256,14 @@ while running:
     keys = pygame.key.get_pressed() # Gathers all current actions of the key binds that get touched by player
 
     if keys[pygame.K_RIGHT]: # If Pressed the Betty right image Will render
-        player_x += 10 # Moves Betty 5 pixels to the right
+        betty_x += 10 # Moves Betty 5 pixels to the right
         betty_image = betty_right_image # Renders the Betty image to appear
     elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
-        player_x += -10 # Moves Betty 5 pixels to the left
+        betty_x += -10 # Moves Betty 5 pixels to the left
         betty_image = betty_left_image # Renders the Betty image to appear
     else:
         betty_image = betty_default_image # If no keys are being touched
-        screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
+        screen.blit(betty_image, (betty_x, betty_y)) # Renders the Default Betty Image
 
     # Timer related code
     elapsed_time = pygame.time.get_ticks() - timer_start if game_started else 0
@@ -271,7 +271,7 @@ while running:
     pygame.display.flip()  # Update the display
     clock.tick(FPS)  # Limit the frame rate 
     
-    player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going off screen
+    betty_x = max(0, min(betty_x, WIDTH - betty_width)) # Prevents Betty from going off screen
 
     # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
@@ -291,9 +291,9 @@ while running:
     # Health Percentage Font
     percentage_font = pygame.font.Font(font_path, 12)
 
-    draw_health_bar(screen, player_health, 10, 5, 200, 20, (0, 255, 0))  # Draw health bar
-    player_health = min(player_health, 100) # Make sure health doesn't exceed 100% on health bar
-    draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
+    draw_health_bar(screen, betty_health, 10, 5, 200, 20, (0, 255, 0))  # Draw health bar
+    betty_health = min(betty_health, 100) # Make sure health doesn't exceed 100% on health bar
+    draw_health_percentage(screen, betty_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
     # Health bar drawn + outline
 
     # Iterating through each cloud in list, increment the coordinates, reset coordinates at random coordinates at top screen
@@ -322,20 +322,20 @@ while running:
         screen.blit(seahorse_image, (seahorse[0], seahorse[1])) # Draws the seahorse image on screen
 
     # Check for collision between Clouds and Betty
-    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-        if check_collision(player_rect, cloud_rect):
-            player_health -= 3  # Decrease player health by 10
+        if check_collision(betty_rect, cloud_rect):
+            betty_health -= 3  # Decrease player health by 10
 
     # Check for collision between rainClouds and Betty
-    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
     for cloud in cloud_list:
         cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-        if check_collision(player_rect, cloud_rain):
-            player_health -= 3  # Decrease player health by 
+        if check_collision(betty_rect, cloud_rain):
+            betty_health -= 3  # Decrease player health by 
 
-    if player_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
+    if betty_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
         mixer.music.stop() #Stop theme music playing instantly
         bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
         bettydeath_sound.play() # When Betty's health hits 0%
@@ -347,13 +347,13 @@ while running:
         high_score = current_score
 
     # Checks for collison between Betty and Seahorse
-    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
     for seahorse in seahorse_list:
         seahorse_rect = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
-        if check_collision_seahorse(player_rect, seahorse_rect):
-            player_health += 1 # Increasing Betty's health when collided
+        if check_collision_seahorse(betty_rect, seahorse_rect):
+            betty_health += 1 # Increasing Betty's health when collided
 
-    screen.blit(betty_image, (player_x, player_y)) # Draws to screen
+    screen.blit(betty_image, (betty_x, betty_y)) # Draws to screen
 
     pygame.display.flip()
     clock.tick(FPS)

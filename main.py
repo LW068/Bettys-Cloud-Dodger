@@ -390,8 +390,8 @@ def game_over_screen():
     # Define the rectangle for displaying the credits
     credits_rect = pygame.Rect(0, HEIGHT - 200, WIDTH, 200)
 
-
-    while True:
+    rolling_credits = True
+    while rolling_credits:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
@@ -413,15 +413,25 @@ def game_over_screen():
         # Move the credits up the screen
         credit_y += 1
 
+        # Render the credits onto the credits rectangle
+        credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
         # Display each line of the credits
         for i, credit in enumerate(credits_list):
             credit_text = font.render(credit, True, WHITE)
             credit_rect = credit_text.get_rect(center=(WIDTH // 2, credit_y + i * credit_height))
             screen.blit(credit_text, credit_rect)
 
-        # Check if all credits have finished rolling up
-        if credit_y + len(credits_list) * credit_height < 0:
+        # Blit the credits rectangle onto the screen
+        screen.fill(BLACK, credits_rect)
+        screen.blit(credits_surf, credits_rect)
+
+        # Check if all credits have finished rolling down
+        if credit_y >= HEIGHT:
             return True
+
+        # Check if all credits have finished rolling up
+        #if credit_y + len(credits_list) * credit_height < 0:
+            #return True
 
         pygame.display.flip()
         clock.tick(FPS)

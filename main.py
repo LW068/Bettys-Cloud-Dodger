@@ -357,7 +357,8 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
-    
+
+   
 def game_over_screen():
     mixer.music.load(end_theme)
     mixer.music.play(-1) # # Loop the music indefinitely
@@ -367,7 +368,57 @@ def game_over_screen():
     restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
+# Define the list of credits
+credits_list = [
+    "Game Design: John Smith",
+    "Programming: Jane Doe",
+    "Artwork: Sarah Johnson",
+    "Music and Sound Effects: Michael Brown",
+    "Special Thanks: Our Kickstarter Backers"
+]
 
+# Calculate the height of each credit line
+credit_height = font.get_height() + 5
+
+# Calculate the starting position of the credits
+credit_y = HEIGHT + 10
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            return False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if restart_button_rect.collidepoint(event.pos):
+                return True
+
+    background_counter += 1  # Update the counter            
+
+    # Flicker the game over background using the counter
+    if background_counter % 32 < 16:
+        screen.blit(end_image1, (0, 0))
+    else:
+        screen.blit(end_image2, (0, 0))
+
+    screen.blit(game_over_text, game_over_rect)
+    screen.blit(restart_button, restart_button_rect)
+
+    # Move the credits up the screen
+    credit_y -= 1
+
+    # Display each line of the credits
+    for i, credit in enumerate(credits_list):
+        credit_text = font.render(credit, True, WHITE)
+        credit_rect = credit_text.get_rect(center=(WIDTH // 2, credit_y + i * credit_height))
+        screen.blit(credit_text, credit_rect)
+
+    # Check if all credits have finished rolling up
+    if credit_y + len(credits_list) * credit_height < 0:
+        return True
+
+    pygame.display.flip()
+    clock.tick(FPS)
+
+"""
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -389,6 +440,7 @@ def game_over_screen():
 
         pygame.display.flip()
         clock.tick(FPS)
+"""
 
 # Show the "Game Over" screen
 restart = game_over_screen()

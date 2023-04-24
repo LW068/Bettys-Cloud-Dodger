@@ -387,8 +387,10 @@ def game_over_screen():
     # Calculate the starting position of the credits
     # credit_y = - len(credits_list) * credit_height  # Change the starting position to the top of the screen
 
-    # Define the rectangle for displaying the credits
-    credits_rect = pygame.Rect(0, HEIGHT - 200, WIDTH, 200)
+    # Set the size and position of the credits rectangle
+    credits_width = 800
+    credits_height = 200
+    credits_rect = pygame.Rect((WIDTH - credits_width) // 2, HEIGHT - credits_height, credits_width, credits_height)
 
     rolling_credits = True
     while rolling_credits:

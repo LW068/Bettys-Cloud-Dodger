@@ -354,7 +354,7 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
-
+""" 
 def game_over_screen(background_counter):
     # existing code for game over screen
 
@@ -400,13 +400,9 @@ def game_over_screen(background_counter):
 
         pygame.display.flip()
         clock.tick(FPS)
-
-"""   
+""" 
+  
 def game_over_screen():
-
-    # existing code for game over screen
-
-
 
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
@@ -430,7 +426,7 @@ def game_over_screen():
                 if restart_button_rect.collidepoint(event.pos):
                     return True
 
-        background_counter += 1  # Update the counter  
+        background_counter = 0  # Update the counter  
 
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:
@@ -443,7 +439,6 @@ def game_over_screen():
 
         pygame.display.flip()
         clock.tick(FPS)
-"""
 
 # Show the "Game Over" screen
 restart = game_over_screen(background_counter)

@@ -381,7 +381,7 @@ def game_over_screen():
     credit_height = font.get_height() + 5
 
     # Calculate the starting position of the credits
-    credit_y = HEIGHT + 20
+    credit_y = HEIGHT + 5
 
     while True:
         for event in pygame.event.get():

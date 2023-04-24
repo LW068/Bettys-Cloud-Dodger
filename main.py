@@ -130,7 +130,7 @@ betty_image = pygame.transform.scale(betty_image, (100, 100))
 betty_left_image = pygame.transform.scale(betty_left_image, (100, 100))
 betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
-cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
+# cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
 end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
@@ -213,13 +213,13 @@ for i in range(1): # creates positions for 1 seahorse
 player_x = WIDTH // 2 - player_width // 2
 player_y = HEIGHT - player_height
 
-# Collisions between player and clouds
+# Collisions between player and clouds - NORMAL PHASE DEFINITION
 def check_collision(player, cloud):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return player_hitbox.colliderect(cloud_rect)
 
-# Collisions between player and rainclouds
+# Collisions between player and rainclouds - RAIN PHASE DEFINITION
 def check_collision(player, raincloud):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
@@ -306,7 +306,7 @@ while running:
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     # Darker Cloud Spawns 30 Seconds in game
     if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
-        current_cloud_image = cloud_image2
+        current_cloud_image = cloud_image1
     else:
         current_cloud_image = cloud_image
 
@@ -321,14 +321,14 @@ while running:
             
         screen.blit(seahorse_image, (seahorse[0], seahorse[1])) # Draws the seahorse image on screen
 
-    # Check for collision between Clouds and Betty
+    # Check for collision between Clouds and Betty - NORMAL PHASE !
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rect):
             player_health -= 3  # Decrease player health by 10
 
-    # Check for collision between rainClouds and Betty
+    # Check for collision between rainClouds and Betty - RAIN PHASE !
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for cloud in cloud_list:
         cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)

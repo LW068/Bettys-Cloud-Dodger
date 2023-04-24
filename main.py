@@ -355,7 +355,7 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
 
-def game_over_screen():
+def game_over_screen(background_counter):
     # existing code for game over screen
 
     # create list of credits to display

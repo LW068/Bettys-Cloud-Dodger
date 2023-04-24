@@ -138,6 +138,16 @@ end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
 
 # Sound Loader 
 bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
+music_path = 'audios/gamemusic.mp3'
+
+# Game Menu Music for START SCREEN
+if os.path.isfile(music_path):
+    try:
+        mixer.music.load(music_path)
+        mixer.music.play(-1)
+        print("Music started playing.")
+    except pygame.error as e:
+        print(f"Error loading music: {e}")
 
 menu = True # initalizing menu variable and setting the value to True / controls menu display
 running = False # Initalizing running variable and setting value to False / controls game loop
@@ -206,8 +216,6 @@ def check_collision_seahorse(player, seahorse):
 # Set up Game Over text
 game_over_text = font.render("", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-
-music_path = 'audios/gamemusic.mp3'
 
 if os.path.isfile(music_path):
     try:

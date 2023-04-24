@@ -268,9 +268,9 @@ def draw_high_score(screen, high_score, x, y, font, color):
     screen.blit(high_score_text, (x, y))
 
 # Initialize a variable to keep track of the current music
-    current_music = main_theme
-    mixer.music.load(current_music)
-    mixer.music.play(-1)
+current_music = main_theme
+mixer.music.load(current_music)
+mixer.music.play(-1)
 
 # Start Game loop / constantly updating 
 while running:

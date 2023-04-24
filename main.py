@@ -303,17 +303,14 @@ while running:
             cloud[1] = random.randint(-500, 0) # Does same thing line above
 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
-    # Darker Cloud Spawns 30 Seconds in game
+    
+    # Rain Cloud Spawns 30 Seconds in game
     if elapsed_time >= 10000:  # 10 seconds * 1000 milliseconds
-        current_cloud_image = cloud_image1
-    else:
-        current_cloud_image = cloud_image
+        cloud_image = cloud_image1
 
-    # Darker Cloud Spawns 30 Seconds in game
-    if elapsed_time >= 10000:  # 10 seconds * 1000 milliseconds
-        current_cloud_image = cloud_image2
-    else:
-        current_cloud_image = cloud_image    
+    for cloud in cloud_list: 
+        screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
+
 
     screen.blit(current_cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
 

@@ -40,7 +40,8 @@ player_hitbox_height = player_height - player_hitbox_offset_y
 #Timer Font size / Dimensions
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Timer")
-font = pygame.font.Font(None, 22)
+font_path = "fonts/press-start-2p.regular.ttf"  # Custom TTF file name
+font = pygame.font.Font(font_path, 18)
 
 # Set up clock / Controls game frame rate and track elapsed game time
 clock = pygame.time.Clock()
@@ -67,9 +68,9 @@ def draw_health_bar(screen, health, x, y, width, height, color):
             height - 4))  # Drawing health bar filled
     
 # Health percentage FONT
-font = pygame.font.Font(None, 64)
+font = pygame.font.Font(font_path, 12)
 # Create a font for the health percentage
-percentage_font = pygame.font.Font(None, 32)
+percentage_font = pygame.font.Font(font_path, 12)
     # Displays the health value as a percentage on the screen using a specified font and color.
 def draw_health_percentage(screen, health, x, y, font, color):
     health_percentage_text = font.render(f"{health}%", True, color) # < creating the % SIGN
@@ -255,7 +256,7 @@ while running:
         file.write(str(high_score))
 
     # Health Percentage Font
-    percentage_font = pygame.font.Font(None, 32)
+    percentage_font = pygame.font.Font(font_path, 12)
 
     draw_health_bar(screen, player_health, 10, 10, 200, 20, (0, 255, 0))  # Draw health bar
     player_health = min(player_health, 100) # Make sure health doesn't exceed 100% on health bar

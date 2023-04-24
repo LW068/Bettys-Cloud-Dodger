@@ -304,8 +304,10 @@ while running:
 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     # Darker Cloud Spawns 30 Seconds in game
-    if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
+    if elapsed_time >= 10000:  # 30 seconds * 1000 milliseconds
         current_cloud_image = cloud_image1
+    elif elapsed_time >= 10000:
+        current_cloud_image = cloud_image2
     else:
         current_cloud_image = cloud_image
 

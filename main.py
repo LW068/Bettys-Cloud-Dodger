@@ -81,7 +81,7 @@ def draw_health_percentage(screen, health, x, y, font, color):
 cloud_width = 100 # Set to 100 pixels
 cloud_height = 50 # Set to 50 pixels
 cloud_list = [] # Initalizing an empty list / storing cloud positions
-cloud_speed = 5 # Well says itself
+cloud_speed = 10 # Well says itself
 
 for i in range(5):  # Loop that iterates 5 times / creating 5 clouds
     cloud_x = random.randint(0, WIDTH - cloud_width) # Generating random clouds spawning but only within Game Window
@@ -92,7 +92,7 @@ for i in range(5):  # Loop that iterates 5 times / creating 5 clouds
 seahorse_width = 100 # Set to 100 pixels
 seahorse_height = 100 # Set to 100 pixels
 seahorse_list = [] # Initalizing an empty list / storing seahorse positions
-seahorse_speed = 3 # Well says itself
+seahorse_speed = 8 # Well says itself
 
 for i in range(1): # Generates Seahorses for Extra Health Boost
     seahorse_x = random.randint(0, WIDTH - cloud_width) # Generating random seahorses spawning but only within Game Window
@@ -141,8 +141,10 @@ bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
 
 menu = True # initalizing menu variable and setting the value to True / controls menu display
 running = False # Initalizing running variable and setting value to False / controls game loop
+game_started = False  # Initializing game_started variable and setting value to False
 background_counter = 0
 button_counter = 0
+FPS = 60
 while menu: # As long as it is set to true, it will control the menu events
     for event in pygame.event.get(): # Iterating through all the events in the event queues
         if event.type == pygame.QUIT: # Checks if window is closed
@@ -152,6 +154,9 @@ while menu: # As long as it is set to true, it will control the menu events
             if start_button.collidepoint(event.pos): # Checks if mouse clicks on start button
                 running = True
                 menu = False
+                game_started = True  # Set game_started to True
+                timer_start = pygame.time.get_ticks()  # Set timer_start when the game starts
+
 
     high_score_text = font.render(f"HIGH SCORE: {high_score}", True, WHITE)
     high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 5))
@@ -165,7 +170,7 @@ while menu: # As long as it is set to true, it will control the menu events
         screen.blit(gamemenu_image2, (0, 0))
 
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(FPS)
 
 # Default Cloud list
 cloud_list = [] # Intializing empty list for storing cloud positions
@@ -225,22 +230,28 @@ while running:
     keys = pygame.key.get_pressed() # Gathers all current actions of the key binds that get touched by player
 
     if keys[pygame.K_RIGHT]: # If Pressed the Betty right image Will render
-        player_x += 5 # Moves Betty 5 pixels to the right
+        player_x += 10 # Moves Betty 5 pixels to the right
         betty_image = betty_right_image # Renders the Betty image to appear
     elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
-        player_x += -5 # Moves Betty 5 pixels to the left
+        player_x += -10 # Moves Betty 5 pixels to the left
         betty_image = betty_left_image # Renders the Betty image to appear
     else:
         betty_image = betty_default_image # If no keys are being touched
         screen.blit(betty_image, (player_x, player_y)) # Renders the Default Betty Image
 
+    # Timer related code
+    elapsed_time = pygame.time.get_ticks() - timer_start if game_started else 0
+
+    pygame.display.flip()  # Update the display
+    clock.tick(FPS)  # Limit the frame rate 
+    
     player_x = max(0, min(player_x, WIDTH - player_width)) # Prevents Betty from going off screen
 
     # In Game Background Filler
     LIGHT_BLUE = (173, 216, 230)
     screen.fill(LIGHT_BLUE)
     
-    # Caculates the time as soon as Game Starts
+    # Calculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
     draw_timer(screen, elapsed_time, WIDTH - 200, 10, font, RED) # Displays the Timer in Game
 
@@ -312,7 +323,7 @@ while running:
     screen.blit(betty_image, (player_x, player_y)) # Draws to screen
 
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(FPS)
 
 def game_over_screen():
     restart_button = pygame.Rect(800 // 2 - 100, HEIGHT // 2.7, 200, 70,)
@@ -342,7 +353,7 @@ def game_over_screen():
         screen.blit(restart_text, restart_text_rect)
 
         pygame.display.flip()
-        clock.tick(60)
+        clock.tick(FPS)
 
 # Show the "Game Over" screen
 restart = game_over_screen()

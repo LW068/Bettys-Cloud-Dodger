@@ -3,7 +3,6 @@ import random
 import sys
 import os
 from pygame import mixer
-import pep8
 
 #Initializing pygame / sound mixer for custom audio clips 
 pygame.init()

@@ -334,6 +334,23 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
+"""
+    # Read current high score from file
+with open("highscore.txt", "r") as f:
+    current_high_score = int(f.read())
+
+# Compare player's score to current high score
+if player_score > current_high_score:
+    # Update high score in memory
+    current_high_score = player_score
+
+    # Write new high score to file
+    with open("highscore.txt", "w") as f:
+        f.write(str(current_high_score))
+
+# Display high score to player
+print("High score: ", current_high_score)
+"""
 
 def game_over_screen():
     restart_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)

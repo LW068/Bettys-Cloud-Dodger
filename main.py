@@ -297,22 +297,25 @@ while running:
     # Determine which background image and music to use based on elapsed_time
     if elapsed_time < 10000:
         current_background = normal_background
-        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+        if not mixer.music.get_busy() or current_music != main_theme:
             mixer.music.stop()
             mixer.music.load(main_theme)
             mixer.music.play(-1)
+            current_music = main_theme
     elif elapsed_time < 20000:
         current_background = rain_background
-        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+        if not mixer.music.get_busy() or current_music != rain_theme:
             mixer.music.stop()
             mixer.music.load(rain_theme)
             mixer.music.play(-1)
+            current_music = rain_theme
     else:
         current_background = thunder_background
-        if not mixer.music.get_busy() or mixer.music.get_pos() < 0.1:
+        if not mixer.music.get_busy() or current_music != thunder_theme:
             mixer.music.stop()
             mixer.music.load(thunder_theme)
             mixer.music.play(-1)
+            current_music = thunder_theme
 
     # Update the background image positions and draw them. This will make the background image scroll vertically and loop.
     background_y1 += background_speed

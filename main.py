@@ -219,11 +219,18 @@ def check_collision(player, cloud):
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return player_hitbox.colliderect(cloud_rect)
 
-# Collisions between player and rainclouds - RAIN PHASE DEFINITION
+# Collisions between player and rain clouds - RAIN PHASE DEFINITION
 def check_collision(player, raincloud):
     player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
     cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return player_hitbox.colliderect(cloud_rain)
+
+# Collisions between player and thunder clouds - THUNDER PHASE DEFINITION
+def check_collision(player, thundercloud):
+    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+    return player_hitbox.colliderect(cloud_thunder)
+
 
 # Collison between Player and Seahorse 
 def check_collision_seahorse(player, seahorse):
@@ -336,12 +343,19 @@ while running:
         if check_collision(player_rect, cloud_rect):
             player_health -= 3  # Decrease player health by 10
 
-    # Check for collision between rainClouds and Betty - RAIN PHASE !
+    # Check for collision between rain Clouds and Betty - RAIN PHASE !
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for cloud in cloud_list:
         cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(player_rect, cloud_rain):
-            player_health -= 3  # Decrease player health by 
+            player_health -= 3  # Decrease player health by
+
+    # Check for collision between thunder Clouds and Betty - THUNDER PHASE !
+    player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
+    for cloud in cloud_list:
+        cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+        if check_collision(player_rect, cloud_thunder):
+            player_health -= 3  # Decrease player health by          
 
     if player_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
         mixer.music.stop() #Stop theme music playing instantly

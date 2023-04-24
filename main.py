@@ -458,8 +458,8 @@ def game_over_screen():
     credit_y = HEIGHT
 
     # load restart button image
-    restart_button = pygame.image.load("restart_button.png").convert_alpha()
-    restart_button_rect = restart_button.get_rect(center=(WIDTH/2, HEIGHT - 100))
+    # restart_button = pygame.image.load("restart_button.png").convert_alpha()
+    # restart_button_rect = restart_button.get_rect(center=(WIDTH/2, HEIGHT - 100))
 
     while True:
         for event in pygame.event.get():

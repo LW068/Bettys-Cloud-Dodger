@@ -354,54 +354,16 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
-""" 
-def game_over_screen(background_counter):
-    # existing code for game over screen
-
-    # create list of credits to display
-    credits = ["Credits:", "Game created by John Doe", "Artwork by Jane Smith", "Music by Joe Brown"]
-
-    # create text surfaces for each credit line
-    credit_surfaces = [font.render(credit, True, WHITE) for credit in credits]
-
-    # start credits at the bottom of the screen
-    credit_y = HEIGHT
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if restart_button_rect.collidepoint(event.pos):
-                    return True
-
-        background_counter += 0  # counter  
-
-        # Flicker the game over background using the counter
-        if background_counter % 32 < 16:
-            screen.blit(end_image1, (0, 0))
-        else:
-            screen.blit(end_image2, (0, 0))
-
-        screen.blit(game_over_text, game_over_rect)
-        screen.blit(restart_button, restart_button_rect)
-
-        # display credits
-        for credit_surface in credit_surfaces:
-            screen.blit(credit_surface, (WIDTH/2 - credit_surface.get_width()/2, credit_y))
-            credit_y += 50  # space between each credit line
-
-        # scroll credits up
-        credit_y -= 1
-
-        # if credits have scrolled off the top, return to main game loop
-        if credit_y < -50 * len(credits):
-            return False
-
-        pygame.display.flip()
-        clock.tick(FPS)
-"""  
+    
 def game_over_screen():
+    mixer.music.load(end_theme)
+    mixer.music.play(-1) # # Loop the music indefinitely
+    
+    restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
+    restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
+    restart_text = font.render("", True, WHITE)
+
+    background_counter = 0  # Line to initialize the counter for screen flickering
 
     while True:
         for event in pygame.event.get():
@@ -411,7 +373,7 @@ def game_over_screen():
                 if restart_button_rect.collidepoint(event.pos):
                     return True
 
-        background_counter = 0   # Line to initialize the counter for screen flickering  
+        background_counter += 1  # Update the counter            
 
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:
@@ -421,7 +383,7 @@ def game_over_screen():
 
         screen.blit(game_over_text, game_over_rect)
         screen.blit(restart_button, restart_button_rect)
-       
+
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -433,4 +395,3 @@ if restart:
     os.execv(sys.executable, ['python'] + sys.argv)
 else:
     pygame.quit()
-

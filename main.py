@@ -254,12 +254,12 @@ while running:
     draw_health_percentage(screen, player_health, 10 + 200 // 2.2 - 15, 10, percentage_font, (0, 0, 0))
     # Health bar drawn + outline
 
-    # Spawn and Render Cloud Blit
+    # Iterating through each cloud in list, increment the coordinates, reset coordinates at random coordinates at top screen
     for cloud in cloud_list: # Iterates through each cloud in the cloud list
         cloud[1] += cloud_speed # increases the y coordinate to make the cloud move vertically downwards 
-        if cloud[1] > HEIGHT: # 
-            cloud[0] = random.randint(0, WIDTH - cloud_width)
-            cloud[1] = random.randint(-500, 0)
+        if cloud[1] > HEIGHT: # checks if it is vertically greater than the screen height / cloud moved off screen 
+            cloud[0] = random.randint(0, WIDTH - cloud_width) # Resets the cloud positions at top of screen at random coordinates
+            cloud[1] = random.randint(-500, 0) # Does same thing line above
 
         screen.blit(cloud_image, (cloud[0], cloud[1]))
     # Darker Cloud Spawns 30 Seconds in game
@@ -268,16 +268,16 @@ while running:
     else:
         current_cloud_image = cloud_image
 
-    screen.blit(current_cloud_image, (cloud[0], cloud[1]))
+    screen.blit(current_cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
 
     # Rendering Seahorse Blit
-    for seahorse in seahorse_list:
-        seahorse[1] += seahorse_speed
-        if seahorse[1] > HEIGHT:
-            seahorse[0] = random.randint(0, WIDTH - cloud_width)
-            seahorse[1] = random.randint(-500, 0)
+    for seahorse in seahorse_list: # iterates through each seahorse in the list
+        seahorse[1] += seahorse_speed # increases the y coordinates to make the seahorsez move vertically downwards
+        if seahorse[1] > HEIGHT: # checks if it is vertically greater than the window screen / seahorse moved off screen
+            seahorse[0] = random.randint(0, WIDTH - cloud_width) # resets the seahorse positions at top of screen at random coordinates
+            seahorse[1] = random.randint(-500, 0) # Does the same thing line above
             
-        screen.blit(seahorse_image, (seahorse[0], seahorse[1]))
+        screen.blit(seahorse_image, (seahorse[0], seahorse[1])) # Draws the seahorse image on screen
 
     # Check for collision between Clouds and Betty
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)

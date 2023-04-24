@@ -154,8 +154,6 @@ rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
 thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
 
 # In-Game Backgrounds Loader
-LIGHT_BLUE = (173, 216, 230)
-screen.fill(LIGHT_BLUE)
 normal_background = pygame.image.load("graphics/normalbackground.jpeg")
 rain_background = pygame.image.load("graphics/rainbackground.jpeg")
 thunder_background = pygame.image.load("graphics/thunderbackground.jpeg")
@@ -296,17 +294,31 @@ while running:
     betty_x = max(0, min(betty_x, WIDTH - betty_width)) # Prevents Betty from going off screen
 
 
-    # Determine which background image to use based on elapsed_time
+    # Determine which background image and music to use based on elapsed_time
     if elapsed_time < 10000:
         current_background = normal_background
+        if not mixer.music.get_busy():
+            mixer.music.load(main_theme)
+            mixer.music.play(-1)
     elif elapsed_time < 20000:
         current_background = rain_background
+        if not mixer.music.get_busy():
+            mixer.music.load(rain_theme)
+            mixer.music.play(-1)
     else:
         current_background = thunder_background
+        if not mixer.music.get_busy():
+            mixer.music.load(thunder_theme)
+            mixer.music.play(-1)
 
-    # Update the background image positions and draw them # This will make the background image scroll vertically and loop 
-    background_y1 = (background_y1 + background_speed) % HEIGHT
-    background_y2 = (background_y2 + background_speed) % HEIGHT
+    # Update the background image positions and draw them. This will make the background image scroll vertically and loop.
+    background_y1 += background_speed
+    background_y2 += background_speed
+
+    if background_y1 > HEIGHT:
+        background_y1 = -HEIGHT
+    if background_y2 > HEIGHT:
+        background_y2 = -HEIGHT
 
     screen.blit(current_background, (0, background_y1))
     screen.blit(current_background, (0, background_y2))

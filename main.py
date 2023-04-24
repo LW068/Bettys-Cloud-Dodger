@@ -367,6 +367,7 @@ def game_over_screen():
     restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
+    credit_y = 50  # Start credits 50 pixels from the top of the screen
     
     # Define the list of credits
     credits_list = [
@@ -381,7 +382,10 @@ def game_over_screen():
     credit_height = font.get_height() + 5
 
     # Calculate the starting position of the credits
-    credit_y = HEIGHT + 15
+    # credit_y = HEIGHT + 15
+
+    # Calculate the starting position of the credits
+    credit_y = - len(credits_list) * credit_height  # Change the starting position to the top of the screen
 
     while True:
         for event in pygame.event.get():

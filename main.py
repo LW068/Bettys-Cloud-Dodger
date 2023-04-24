@@ -111,7 +111,6 @@ start_button = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
 # image loader
 betty_image = pygame.image.load('graphics/betty.png')
 spaceimage = pygame.image.load('graphics/spaceimage.png')
-space_image = pygame.image.load('graphics/spaceimage.png')
 cloud_image = pygame.image.load('graphics/cloudimage.png')
 cloud_image2 = pygame.image.load('graphics/cloudimage2.png')
 betty_left_image = pygame.image.load('graphics/bettyleft.png')
@@ -167,14 +166,14 @@ cloud_list = [] # Intializing empty list for storing cloud positions
 for i in range(5): # Creates positions for the 5 clouds
     cloud_x = random.randint(0, WIDTH - cloud_width) # Spawns the cloud within the screen x axis
     cloud_y = random.randint(-500, 0) # spawns the clouds above which is y axis off screen
-    cloud_list.append([cloud_x, cloud_y]) # stores the created 
+    cloud_list.append([cloud_x, cloud_y]) # appends the created cloud to the cloud list
 
 # Seahorse list
-seahorse_list = []
-for i in range(1):
-    seahorse_x = random.randint(0, WIDTH - seahorse_width)
-    seahorse_y = random.randint(-500 , 0 )
-    seahorse_list.append([seahorse_x, seahorse_y])
+seahorse_list = [] # intializes empty list for storing seahorse positions
+for i in range(1): # creates positions for 1 seahorse
+    seahorse_x = random.randint(0, WIDTH - seahorse_width) # spawns the seahorse within the screen x axis
+    seahorse_y = random.randint(-500 , 0 ) # spawns the seahorse above which is y axis off screen
+    seahorse_list.append([seahorse_x, seahorse_y]) # appends the created seahorse to the seahorse list
 
 # Set up player
 player_x = WIDTH // 2 - player_width // 2
@@ -211,7 +210,7 @@ def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"High Score: {int(high_score)}s", True, color)
     screen.blit(high_score_text, (x, y))
 
-# Start game loop / constantly updating 
+# Start Game loop / constantly updating 
 while running:
     for event in pygame.event.get(): # Iterates through all event queues
         if event.type == pygame.QUIT:
@@ -261,7 +260,7 @@ while running:
             cloud[0] = random.randint(0, WIDTH - cloud_width) # Resets the cloud positions at top of screen at random coordinates
             cloud[1] = random.randint(-500, 0) # Does same thing line above
 
-        screen.blit(cloud_image, (cloud[0], cloud[1]))
+        screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     # Darker Cloud Spawns 30 Seconds in game
     if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
         current_cloud_image = cloud_image2
@@ -270,9 +269,9 @@ while running:
 
     screen.blit(current_cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
 
-    # Rendering Seahorse Blit
+    # Iterates through loop / draws seahorse image to screen
     for seahorse in seahorse_list: # iterates through each seahorse in the list
-        seahorse[1] += seahorse_speed # increases the y coordinates to make the seahorsez move vertically downwards
+        seahorse[1] += seahorse_speed # increases the y coordinates to make the seahorse move vertically downwards
         if seahorse[1] > HEIGHT: # checks if it is vertically greater than the window screen / seahorse moved off screen
             seahorse[0] = random.randint(0, WIDTH - cloud_width) # resets the seahorse positions at top of screen at random coordinates
             seahorse[1] = random.randint(-500, 0) # Does the same thing line above
@@ -286,25 +285,25 @@ while running:
         if check_collision(player_rect, cloud_rect):
             player_health -= 3  # Decrease player health by 10
 
-    if player_health <= 0:
-        mixer.music.stop() #Stop theme music playing instantly
+    if player_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
+        mixer.music.stop() # Stop theme music playing instantly
         bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
-        bettydeath_sound.play() # When Betty health hits 0%
+        bettydeath_sound.play() # When Betty's health hits 0%
         running = False  # End the game if player health reaches 0% Health
 
     # Players High score
     current_score = int(elapsed_time // 1000)
-    if current_score > high_score:
+    if current_score > high_score: # checks to see the if current score is greater than high score
         high_score = current_score
 
-    # Check for collison between Betty and Seahorse
+    # Checks for collison between Betty and Seahorse
     player_rect = pygame.Rect(player_x, player_y, player_width, player_height)
     for seahorse in seahorse_list:
         seahorse_rect = pygame.Rect(seahorse[0], seahorse[1], seahorse_width, seahorse_height)
         if check_collision_seahorse(player_rect, seahorse_rect):
-            player_health += 1 # Increasing betty health when collided
+            player_health += 1 # Increasing Betty's health when collided
 
-    screen.blit(betty_image, (player_x, player_y))
+    screen.blit(betty_image, (player_x, player_y)) # Draws to screen
 
     pygame.display.flip()
     clock.tick(60)
@@ -321,7 +320,7 @@ def game_over_screen():
                 if restart_button.collidepoint(event.pos):
                     return True
 
-        screen.blit(spaceimage, (0, 0))  # game over background
+        screen.blit(spaceimage, (0, 0))  # Draws Game over background
         screen.blit(game_over_text, game_over_rect)
         pygame.draw.rect(screen, RED, restart_button)
         restart_text_rect = restart_text.get_rect(center=restart_button.center)

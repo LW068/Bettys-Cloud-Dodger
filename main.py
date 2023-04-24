@@ -300,14 +300,14 @@ while running:
 
 
     # Determine which background image and music to use based on elapsed_time
-    if elapsed_time < 10000:
+    if elapsed_time < 134000:
         current_background = normal_background
         if current_music != main_theme:
             mixer.music.stop()
             mixer.music.load(main_theme)
             mixer.music.play(-1)
             current_music = main_theme
-    elif elapsed_time < 20000:
+    elif elapsed_time < 232000:
         current_background = rain_background
         if current_music != rain_theme:
             mixer.music.stop()

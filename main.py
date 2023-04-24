@@ -312,8 +312,6 @@ while running:
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
 
 
-    screen.blit(current_cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
-
     # Iterates through loop / draws seahorse image to screen
     for seahorse in seahorse_list: # iterates through each seahorse in the list
         seahorse[1] += seahorse_speed # increases the y coordinates to make the seahorse move vertically downwards

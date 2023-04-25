@@ -370,7 +370,7 @@ def game_over_screen():
 
     # Define BLACK color as (R, G, B) tuple
     BLACK = (0, 0, 0)
-    credit_y = 50  # Start credits 50 pixels from the top of the screen
+    credit_y = 30  # Start credits 50 pixels from the top of the screen
 
     # Define the list of credits
     credits_list = [

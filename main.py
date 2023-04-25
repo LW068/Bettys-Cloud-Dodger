@@ -401,7 +401,7 @@ def game_over_screen():
                 return False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if restart_button_rect.collidepoint(event.pos):
-                    return True
+                    rolling_credits = False # stop rolling the credits
 
         background_counter += 1  # Update the counter            
 

@@ -386,7 +386,7 @@ def game_over_screen():
 
     # Create a new surface for the credits frame
     credits_frame = pygame.Surface(credits_rect.size)
-    credits_frame.fill((100, 255, 255))  # Set the background color to white
+    credits_frame.fill((100, 155, 255))  # Set the background color to white
 
     # Calculate the height of each credit line
     credit_height = credit_size + 5

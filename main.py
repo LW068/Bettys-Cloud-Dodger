@@ -122,6 +122,7 @@ betty_right_image = pygame.image.load('graphics/bettyright.png')
 betty_default_image = pygame.image.load("graphics/betty.png")
 seahorse_image = pygame.image.load('graphics/seahorse.png')
 start_button_image = pygame.image.load('graphics/startbutton.GIF')
+thunder_cloud = pygame.image.load('graphics/ThunderCloud.png')
 
 # Scale Images to specified pixel dimensions
 start_button_image = pygame.transform.scale(start_button_image, (150, 150))
@@ -130,11 +131,10 @@ betty_image = pygame.transform.scale(betty_image, (100, 100))
 betty_left_image = pygame.transform.scale(betty_left_image, (100, 100))
 betty_right_image = pygame.transform.scale(betty_right_image, (100, 100))
 cloud_image = pygame.transform.scale(cloud_image, (cloud_width, cloud_height))
-cloud_image2 = pygame.transform.scale(cloud_image2, (cloud_width, cloud_height))
 betty_default_image = pygame.transform.scale(betty_default_image, (100, 100))
 end_image1 = pygame.transform.scale(end_image1, (WIDTH, HEIGHT))
 end_image2 = pygame.transform.scale(end_image2, (WIDTH, HEIGHT))
-
+thunder_cloud = pygame.transform.scale(thunder_cloud, (100, 100))
 
 # Cloud Frame loader
 current_cloud_image_index = 0
@@ -152,6 +152,19 @@ main_theme = 'audios/BettysCloudDodgerMainTheme.mp3'
 end_theme = 'audios/BettysCloudDodgerEndCredits.mp3'
 rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
 thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
+
+# In-Game Backgrounds Loader
+normal_background = pygame.image.load("graphics/normalbackground.jpeg")
+rain_background = pygame.image.load("graphics/rainbackground.jpeg")
+thunder_background = pygame.image.load("graphics/thunderbackground.jpeg")
+normal_background = pygame.transform.scale(normal_background, (WIDTH, HEIGHT))
+rain_background = pygame.transform.scale(rain_background, (WIDTH, HEIGHT))
+thunder_background = pygame.transform.scale(thunder_background, (WIDTH, HEIGHT))
+
+# Background Scrolling Settings
+background_y1 = 0
+background_y2 = -HEIGHT
+background_speed = 2
 
 # Game Menu Music for START SCREEN
 if os.path.isfile(main_theme):
@@ -213,17 +226,24 @@ for i in range(1): # creates positions for 1 seahorse
 betty_x = WIDTH // 2 - betty_width // 2
 betty_y = HEIGHT - betty_height
 
-# Collisions between Betty and clouds
+# Collisions between Betty and clouds - NORMAL PHASE DEFINITION
 def check_collision(betty, cloud):
     betty_hitbox = pygame.Rect(betty[0] + betty_hitbox_offset_x // 2, betty[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return betty_hitbox.colliderect(cloud_rect)
 
-# Collisions between Betty and rainclouds
+# Collisions between Betty and rainclouds - RAIN PHASE DEFINITION
 def check_collision(betty, raincloud):
     betty_hitbox = pygame.Rect(betty[0] + betty_hitbox_offset_x // 2, betty[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
     return betty_hitbox.colliderect(cloud_rain)
+
+
+# Collisions between player and thunder clouds - THUNDER PHASE DEFINITION
+def check_collision(player, thundercloud):
+    betty_hitbox = pygame.Rect(player[0] + betty_hitbox_offset_x // 2, player[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
+    cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+    return betty_hitbox.colliderect(cloud_thunder)
 
 # Collison between Betty and Seahorse 
 def check_collision_seahorse(betty, seahorse):
@@ -247,6 +267,11 @@ def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"HIGH SCORE: {int(high_score)}", True, color)
     screen.blit(high_score_text, (x, y))
 
+# Initialize a variable to keep track of the current music
+current_music = main_theme
+mixer.music.load(current_music)
+mixer.music.play(-1)
+
 # Start Game loop / constantly updating 
 while running:
     for event in pygame.event.get(): # Iterates through all event queues
@@ -259,7 +284,7 @@ while running:
         betty_x += 10 # Moves Betty 5 pixels to the right
         betty_image = betty_right_image # Renders the Betty image to appear
     elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
-        betty_x += -10 # Moves Betty 5 pixels to the left
+        betty_x += -10 # Moves Betty 10 pixels to the left
         betty_image = betty_left_image # Renders the Betty image to appear
     else:
         betty_image = betty_default_image # If no keys are being touched
@@ -273,9 +298,43 @@ while running:
     
     betty_x = max(0, min(betty_x, WIDTH - betty_width)) # Prevents Betty from going off screen
 
-    # In Game Background Filler
-    LIGHT_BLUE = (173, 216, 230)
-    screen.fill(LIGHT_BLUE)
+
+    # Determine which background image and music to use based on elapsed_time
+    if elapsed_time < 134000:
+        current_background = normal_background
+        if current_music != main_theme:
+            mixer.music.stop()
+            mixer.music.load(main_theme)
+            mixer.music.play(-1)
+            current_music = main_theme
+    elif elapsed_time < 232000:
+        current_background = rain_background
+        if current_music != rain_theme:
+            mixer.music.stop()
+            mixer.music.load(rain_theme)
+            mixer.music.play(-1)
+            current_music = rain_theme
+    else:
+        current_background = thunder_background
+        if current_music != thunder_theme:
+            mixer.music.stop()
+            mixer.music.load(thunder_theme)
+            mixer.music.play(-1)
+            current_music = thunder_theme
+
+
+    # Update the background image positions and draw them. This will make the background image scroll vertically and loop.
+    background_y1 += background_speed
+    background_y2 += background_speed
+
+    if background_y1 > HEIGHT:
+        background_y1 = -HEIGHT
+    if background_y2 > HEIGHT:
+        background_y2 = -HEIGHT
+
+    screen.blit(current_background, (0, background_y1))
+    screen.blit(current_background, (0, background_y2))
+    
     
     # Calculates the time as soon as Game Starts
     elapsed_time = pygame.time.get_ticks() - timer_start
@@ -304,13 +363,21 @@ while running:
             cloud[1] = random.randint(-500, 0) # Does same thing line above
 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
-    # Darker Cloud Spawns 30 Seconds in game
-    if elapsed_time >= 30000:  # 30 seconds * 1000 milliseconds
-        current_cloud_image = cloud_image2
-    else:
-        current_cloud_image = cloud_image
+    
+    # Rain Cloud Spawns 10 Seconds into game - RAIN PHASE SPAWN
+    if elapsed_time >= 134000:  # 10 seconds * 1000 milliseconds
+        cloud_image = cloud_image1
 
-    screen.blit(current_cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
+    for cloud in cloud_list: 
+        screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
+    
+    # Thunder Cloud Spawns 20 Seconds into game - THUNDER PHASE SPAWN
+    if elapsed_time >= 232000:  # 20 seconds * 1000 milliseconds
+        cloud_image = thunder_cloud
+
+    for cloud in cloud_list: 
+        screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
+
 
     # Iterates through loop / draws seahorse image to screen
     for seahorse in seahorse_list: # iterates through each seahorse in the list
@@ -321,19 +388,26 @@ while running:
             
         screen.blit(seahorse_image, (seahorse[0], seahorse[1])) # Draws the seahorse image on screen
 
-    # Check for collision between Clouds and Betty
+    # Check for collision between Clouds and Betty - NORMAL PHASE !
     betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
     for cloud in cloud_list:
         cloud_rect = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(betty_rect, cloud_rect):
             betty_health -= 3  # Decrease player health by 10
 
-    # Check for collision between rainClouds and Betty
+    # Check for collision between Rain Clouds and Betty - RAIN PHASE !
     betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
     for cloud in cloud_list:
         cloud_rain = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
         if check_collision(betty_rect, cloud_rain):
-            betty_health -= 3  # Decrease player health by 
+            betty_health -= 3  # Decrease player health by
+
+    # Check for collision between thunder Clouds and Betty - THUNDER PHASE !
+    betty_rect = pygame.Rect(betty_x, betty_y, betty_width, betty_height)
+    for cloud in cloud_list:
+        cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
+        if check_collision(betty_rect, cloud_thunder):
+            betty_health -= 3  # Decrease player health by          
 
     if betty_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
         mixer.music.stop() #Stop theme music playing instantly

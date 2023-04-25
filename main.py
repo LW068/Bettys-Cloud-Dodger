@@ -395,6 +395,7 @@ def game_over_screen():
     credit_y = credits_rect.bottom
 
     rolling_credits = True
+    credits_speed = 1  # Set the speed of the credits scrolling
     while rolling_credits:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -414,13 +415,16 @@ def game_over_screen():
         screen.blit(game_over_text, game_over_rect)
         screen.blit(restart_button, restart_button_rect)
 
+        # Move the credits up the screen
+        credit_y -= credits_speed
+
         # Render the credits onto the credits rectangle
-        credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
+        #credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
 
 
 
         # Render the credits onto the credits frame
-        #credits_frame.fill((255, 255, 255))  # Clear the frame
+        credits_frame.fill((255, 255, 255))  # Clear the frame
 
         BLACK = (0, 0, 0)
 

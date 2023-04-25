@@ -3,7 +3,6 @@ import random
 import sys
 import os
 from pygame import mixer
-from pygame import Color
 
 #Initializing pygame / sound mixer for custom audio clips 
 pygame.init()
@@ -424,16 +423,15 @@ def game_over_screen():
         # Render the credits onto the credits frame
         #credits_frame.fill((255, 255, 255))  # Clear the frame
 
-        WHITE = Color('white')
 
         # Display each line of the credits
         for i, credit in enumerate(credits_list):
             credit_text = font.render(credit, True, (255, 255, 255))
             credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
-            credits_surf.blit(credit_text, credit_rect)
+            credits_frame.blit(credit_text, credit_rect)
 
         # Blit the credits frame onto the main screen
-        screen.blit(credits_surf, credits_rect)
+        screen.blit(credits_frame, credits_rect)
 
         # Move the credits up within the credits rectangle
         credits_rect.move_ip(0, -1)

@@ -6,15 +6,20 @@ But there's hope! Along the way, friendly seahorses will appear, ready to be col
 
 ## Installation
 
-Clone this GitHub repository: git clone https://github.com/yourusername/bettys-cloud-dodger.git
+# Clone this GitHub repository: git clone https://github.com/yourusername/bettys-cloud-dodger.git
+
 Navigate to the project directory: cd bettys-cloud-dodger
+
 Install pygame by running pip install pygame or pip3 install pygame in your terminal.
+
 Run the game by executing the main.py script: python main.py or python3 main.py
 Controls
 
 Use the mouse to click on "PRESS START" to begin the game and "PLAY AGAIN" to restart after a game over.
+
 Use the arrow keys (left and right) to move Betty and dodge the falling clouds.
-Gameplay
+
+## Gameplay
 
 As time passes, the game will become increasingly challenging, introducing new phases with unique obstacles and elements. Test your skills and see how long you can help Betty dodge the clouds!
 

@@ -378,16 +378,21 @@ def game_over_screen():
         "Special Thanks: Our Hightech Brains"
     ]
 
-    #BLACK = (0, 0, 0) # Define BLACK color as (R, G, B) tuple
-
     # Define the credits rectangle
     credits_rect = pygame.Rect(100, 100, 400, 400)
 
+    # Define the size of the credit text
+    credit_size = 32
+
+    # Create a new surface for the credits frame
+    credits_frame = pygame.Surface(credits_rect.size)
+    credits_frame.fill((255, 255, 255))  # Set the background color to white
+
     # Calculate the height of each credit line
-    credit_height = font.get_height() + 5
+    credit_height = credit_size + 5
 
     # Calculate the starting position of the credits
-    credit_y = credits_rect.top
+    credit_y = credits_rect.bottom
 
     rolling_credits = True
     while rolling_credits:
@@ -412,24 +417,20 @@ def game_over_screen():
         # Move the credits down the screen
         credit_y += 1
 
-        # Render the credits onto the credits rectangle
-        credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
+        # Render the credits onto the credits frame
+        credits_frame.fill((255, 255, 255))  # Clear the frame
         # Display each line of the credits
         for i, credit in enumerate(credits_list):
-            credit_text = font.render(credit, True, WHITE)
-            credit_rect = credit_text.get_rect(center=(WIDTH // 2, credit_y + i * credit_height))
-            screen.blit(credit_text, credit_rect)
+            credit_text = font.render(credit, True, BLACK)
+            credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
+            credits_frame.blit(credit_text, credit_rect)
+
+        # Blit the credits frame onto the main screen
+        screen.blit(credits_frame, credits_rect)
 
         # Check if all credits have finished rolling down
         if credit_y < -len(credits_list) * credit_height:
             return True
-
-        # Define BLACK color as (R, G, B) tuple
-        #BLACK = (0, 0, 0)
-
-        # Blit the credits rectangle onto the screen
-        #screen.fill(BLACK, credits_rect)
-        #screen.blit(credits_surf, credits_rect)
 
         pygame.display.flip()
         clock.tick(FPS)

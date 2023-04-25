@@ -284,7 +284,7 @@ while running:
         betty_x += 10 # Moves Betty 5 pixels to the right
         betty_image = betty_right_image # Renders the Betty image to appear
     elif keys[pygame.K_LEFT]: # If pressed the Betty Left Image will render
-        betty_x += -10 # Moves Betty 5 pixels to the left
+        betty_x += -10 # Moves Betty 10 pixels to the left
         betty_image = betty_left_image # Renders the Betty image to appear
     else:
         betty_image = betty_default_image # If no keys are being touched

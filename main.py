@@ -425,7 +425,7 @@ def game_over_screen():
         # Render the credits onto the credits frame
         #credits_frame.fill((255, 255, 255))  # Clear the frame
 
-        credits_speed += 8
+        credits_speed = 8
         # Update the position of the text
         credit_rect.move_ip(0, credits_speed)
 

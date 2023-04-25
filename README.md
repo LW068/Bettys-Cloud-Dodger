@@ -1,4 +1,4 @@
-# Betty's Cloud Dodger
+                                          # Betty's Cloud Dodger
 ![MenuScreen2](https://user-images.githubusercontent.com/108279441/234294491-13a4b9d5-666f-4eba-a33d-08ef8fce4b80.png)
 
 Welcome to Betty's Cloud Dodger, an exciting and challenging Pygame-based game that will test your reflexes and quick thinking! Take control of Betty, our nimble protagonist, as she navigates through the sky filled with treacherous falling clouds.

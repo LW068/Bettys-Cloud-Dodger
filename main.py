@@ -425,11 +425,11 @@ def game_over_screen():
             return True
 
         # Define BLACK color as (R, G, B) tuple
-        BLACK = (0, 0, 0)
+        #BLACK = (0, 0, 0)
 
         # Blit the credits rectangle onto the screen
-        screen.fill(BLACK, credits_rect)
-        screen.blit(credits_surf, credits_rect)
+        #screen.fill(BLACK, credits_rect)
+        #screen.blit(credits_surf, credits_rect)
 
         pygame.display.flip()
         clock.tick(FPS)

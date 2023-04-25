@@ -9,7 +9,7 @@ But there's hope! Along the way, friendly seahorses will appear, ready to be col
 
 ## Clone this GitHub repository: git clone https://github.com/yourusername/bettys-cloud-dodger.git
 
-Navigate to the project directory: cd bettys-cloud-dodger
+Navigate to the project directory: 'cd bettys-cloud-dodger'
 
 Install pygame by running `pip install pygame` or `pip3 install` pygame in your terminal.
 

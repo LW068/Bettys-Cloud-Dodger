@@ -154,8 +154,6 @@ rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
 thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
 
 # In-Game Backgrounds Loader
-LIGHT_BLUE = (173, 216, 230)
-screen.fill(LIGHT_BLUE)
 normal_background = pygame.image.load("graphics/normalbackground.jpeg")
 rain_background = pygame.image.load("graphics/rainbackground.jpeg")
 thunder_background = pygame.image.load("graphics/thunderbackground.jpeg")
@@ -243,9 +241,9 @@ def check_collision(betty, raincloud):
 
 # Collisions between player and thunder clouds - THUNDER PHASE DEFINITION
 def check_collision(player, thundercloud):
-    player_hitbox = pygame.Rect(player[0] + player_hitbox_offset_x // 2, player[1] + player_hitbox_offset_y // 2, player_hitbox_width, player_hitbox_height)
+    betty_hitbox = pygame.Rect(player[0] + betty_hitbox_offset_x // 2, player[1] + betty_hitbox_offset_y // 2, betty_hitbox_width, betty_hitbox_height)
     cloud_thunder = pygame.Rect(cloud[0], cloud[1], cloud_width, cloud_height)
-    return player_hitbox.colliderect(cloud_thunder)
+    return betty_hitbox.colliderect(cloud_thunder)
 
 # Collison between Betty and Seahorse 
 def check_collision_seahorse(betty, seahorse):
@@ -268,6 +266,11 @@ if os.path.isfile(main_theme):
 def draw_high_score(screen, high_score, x, y, font, color):
     high_score_text = font.render(f"HIGH SCORE: {int(high_score)}", True, color)
     screen.blit(high_score_text, (x, y))
+
+# Initialize a variable to keep track of the current music
+current_music = main_theme
+mixer.music.load(current_music)
+mixer.music.play(-1)
 
 # Start Game loop / constantly updating 
 while running:
@@ -296,17 +299,38 @@ while running:
     betty_x = max(0, min(betty_x, WIDTH - betty_width)) # Prevents Betty from going off screen
 
 
-    # Determine which background image to use based on elapsed_time
-    if elapsed_time < 10000:
+    # Determine which background image and music to use based on elapsed_time
+    if elapsed_time < 134000:
         current_background = normal_background
-    elif elapsed_time < 20000:
+        if current_music != main_theme:
+            mixer.music.stop()
+            mixer.music.load(main_theme)
+            mixer.music.play(-1)
+            current_music = main_theme
+    elif elapsed_time < 232000:
         current_background = rain_background
+        if current_music != rain_theme:
+            mixer.music.stop()
+            mixer.music.load(rain_theme)
+            mixer.music.play(-1)
+            current_music = rain_theme
     else:
         current_background = thunder_background
+        if current_music != thunder_theme:
+            mixer.music.stop()
+            mixer.music.load(thunder_theme)
+            mixer.music.play(-1)
+            current_music = thunder_theme
 
-    # Update the background image positions and draw them # This will make the background image scroll vertically and loop 
-    background_y1 = (background_y1 + background_speed) % HEIGHT
-    background_y2 = (background_y2 + background_speed) % HEIGHT
+
+    # Update the background image positions and draw them. This will make the background image scroll vertically and loop.
+    background_y1 += background_speed
+    background_y2 += background_speed
+
+    if background_y1 > HEIGHT:
+        background_y1 = -HEIGHT
+    if background_y2 > HEIGHT:
+        background_y2 = -HEIGHT
 
     screen.blit(current_background, (0, background_y1))
     screen.blit(current_background, (0, background_y2))
@@ -341,14 +365,14 @@ while running:
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     
     # Rain Cloud Spawns 10 Seconds into game - RAIN PHASE SPAWN
-    if elapsed_time >= 10000:  # 10 seconds * 1000 milliseconds
+    if elapsed_time >= 134000:  # 10 seconds * 1000 milliseconds
         cloud_image = cloud_image1
 
     for cloud in cloud_list: 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
     
     # Thunder Cloud Spawns 20 Seconds into game - THUNDER PHASE SPAWN
-    if elapsed_time >= 20000:  # 20 seconds * 1000 milliseconds
+    if elapsed_time >= 232000:  # 20 seconds * 1000 milliseconds
         cloud_image = thunder_cloud
 
     for cloud in cloud_list: 

@@ -421,7 +421,7 @@ def game_over_screen():
 
 
         # Render the credits onto the credits frame
-        #credits_frame.fill((255, 255, 255))  # Clear the frame
+        credits_frame.fill((255, 255, 255))  # Clear the frame
 
         BLACK = (0,0,0)
 

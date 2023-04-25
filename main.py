@@ -378,11 +378,17 @@ def game_over_screen():
         "Special Thanks: Our Hightech Brains"
     ]
 
+    # Define the credits rectangle
+    credits_rect = pygame.Rect(100, 100, 400, 400)
+
     # Calculate the height of each credit line
     credit_height = font.get_height() + 5
 
+    # Calculate the starting position of the credits
+    credit_y = credits_rect.top
 
-    credits_rect = pygame.Rect((WIDTH // 2 - 200, HEIGHT // 2 - 100, 400, 200))
+
+    #credits_rect = pygame.Rect((WIDTH // 2 - 200, HEIGHT // 2 - 100, 400, 200))
 
 
     rolling_credits = True

@@ -414,26 +414,45 @@ def game_over_screen():
         screen.blit(game_over_text, game_over_rect)
         screen.blit(restart_button, restart_button_rect)
 
-        # Move the credits down the screen
-        credit_y += 1
-
-        # Render the credits onto the credits frame
-        credits_frame.fill((255, 255, 255))  # Clear the frame
-
-        BLACK = (0, 0, 0)
+        # Render the credits onto the credits rectangle
+        credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
 
         # Display each line of the credits
         for i, credit in enumerate(credits_list):
-            credit_text = font.render(credit, True, BLACK)
-            credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
-            credits_frame.blit(credit_text, credit_rect)
+            credit_text = font.render(credit, True, WHITE)
+            credit_rect = credit_text.get_rect(center=(WIDTH // 2, credit_y + i * credit_height))
+
+        # Render the credits onto the credits frame
+        #credits_frame.fill((255, 255, 255))  # Clear the frame
+
+        # Update the position of the text
+        credit_rect.move_ip(0, credits_speed)
+
+        # Check if the text has reached the end of the rectangle
+        if credit_rect.bottom <= credits_rect.bottom:
+            screen.blit(credit_text, credit_rect)
+
+        # Update the position of the credits
+        credit_y -= credits_speed
+
+        # Check if all credits have finished rolling down
+        if credit_y < -len(credits_list) * credit_height:
+            return True
+
+        #BLACK = (0, 0, 0)
+
+        # Display each line of the credits
+        #for i, credit in enumerate(credits_list):
+            #credit_text = font.render(credit, True, BLACK)
+            #credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
+            #credits_frame.blit(credit_text, credit_rect)
 
         # Blit the credits frame onto the main screen
         screen.blit(credits_frame, credits_rect)
 
         # Check if all credits have finished rolling down
-        if credit_y < -len(credits_list) * credit_height:
-            return True
+        #if credit_y < -len(credits_list) * credit_height:
+            #return True
 
         pygame.display.flip()
         clock.tick(FPS)

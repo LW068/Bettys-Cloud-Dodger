@@ -378,7 +378,7 @@ def game_over_screen():
         "Special Thanks: Our Hightech Brains"
     ]
 
-    BLACK = (0, 0, 0) # Define BLACK color as (R, G, B) tuple
+    #BLACK = (0, 0, 0) # Define BLACK color as (R, G, B) tuple
 
     # Define the credits rectangle
     credits_rect = pygame.Rect(100, 100, 400, 400)

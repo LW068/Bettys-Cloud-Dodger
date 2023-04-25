@@ -382,11 +382,8 @@ def game_over_screen():
     credit_height = font.get_height() + 5
 
 
-    # Set the size and position of the credits rectangle
-    credits_width = 300
-    credits_height = 100
-    credits_x = (WIDTH - rect_width) // 2  # Center the rectangle horizontally
-    credits_rect = pygame.Rect((WIDTH - credits_width) // 2, HEIGHT - credits_height, credits_width, credits_height)
+    credits_rect = pygame.Rect((WIDTH // 2 - 200, HEIGHT // 2 - 100, 400, 200))
+
 
     rolling_credits = True
     while rolling_credits:

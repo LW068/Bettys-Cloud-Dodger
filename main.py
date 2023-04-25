@@ -300,15 +300,21 @@ while running:
 
 
     # Determine which background image and music to use based on elapsed_time
-    if elapsed_time < 134000:
+    if elapsed_time < 13400:
         current_background = normal_background
+        cloud_speed = 10
+        background_speed = 5
+        seahorse_speed = 8
         if current_music != main_theme:
             mixer.music.stop()
             mixer.music.load(main_theme)
             mixer.music.play(-1)
             current_music = main_theme
-    elif elapsed_time < 232000:
+    elif elapsed_time < 23200:
         current_background = rain_background
+        cloud_speed = 15
+        background_speed = 13
+        seahorse_speed = 12
         if current_music != rain_theme:
             mixer.music.stop()
             mixer.music.load(rain_theme)
@@ -316,6 +322,9 @@ while running:
             current_music = rain_theme
     else:
         current_background = thunder_background
+        cloud_speed = 20
+        background_speed = 18
+        seahorse_speed = 16
         if current_music != thunder_theme:
             mixer.music.stop()
             mixer.music.load(thunder_theme)
@@ -365,14 +374,14 @@ while running:
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws cloud image to screen
     
     # Rain Cloud Spawns 10 Seconds into game - RAIN PHASE SPAWN
-    if elapsed_time >= 134000:  # 10 seconds * 1000 milliseconds
+    if elapsed_time >= 13400:  # 10 seconds * 1000 milliseconds
         cloud_image = cloud_image1
 
     for cloud in cloud_list: 
         screen.blit(cloud_image, (cloud[0], cloud[1])) # Draws the clouds on screen
     
     # Thunder Cloud Spawns 20 Seconds into game - THUNDER PHASE SPAWN
-    if elapsed_time >= 232000:  # 20 seconds * 1000 milliseconds
+    if elapsed_time >= 23200:  # 20 seconds * 1000 milliseconds
         cloud_image = thunder_cloud
 
     for cloud in cloud_list: 

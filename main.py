@@ -423,11 +423,11 @@ def game_over_screen():
         # Render the credits onto the credits frame
         #credits_frame.fill((255, 255, 255))  # Clear the frame
 
-        BLACK = (0, 0, 0)
+        WHITE = (255, 255, 255)
 
         # Display each line of the credits
         for i, credit in enumerate(credits_list):
-            credit_text = font.render(credit, True, BLACK)
+            credit_text = font.render(credit, True, WHITE)
             credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
             credits_surf.blit(credit_text, credit_rect)
 

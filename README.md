@@ -9,7 +9,6 @@ But there's hope! Along the way, friendly seahorses will appear, ready to be col
 # Installation
 
 ## Clone this GitHub Repository `Locally` : 
-
 ```
 git clone https://github.com/LW068/Bettys-Cloud-Dodger.git
 ```

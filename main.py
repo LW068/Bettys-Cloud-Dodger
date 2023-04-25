@@ -441,10 +441,30 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
     
+def display_score_screen(current_score, font):
+    start_time = pygame.time.get_ticks()
+
+    while True:
+        current_time = pygame.time.get_ticks()
+        if current_time - start_time >= 3000:  # Display the score for 3 seconds (3000 ms)
+            break
+
+        screen.fill((0, 0, 0))  # Fill the screen with black
+        score_text = font.render(f"SCORE: {current_score}", True, WHITE)
+        score_text_rect = score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        screen.blit(score_text, score_text_rect)
+        pygame.display.flip()
+        clock.tick(FPS)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 def game_over_screen():
     mixer.music.load(end_theme)
-    mixer.music.play(-1) # # Loop the music indefinitely
-    
+    mixer.music.play(-1)  # Loop the music indefinitely
+
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))
     restart_text = font.render("", True, WHITE)
@@ -459,7 +479,7 @@ def game_over_screen():
                 if restart_button_rect.collidepoint(event.pos):
                     return True
 
-        background_counter += 1  # Update the counter            
+        background_counter += 1  # Update the counter
 
         # Flicker the game over background using the counter
         if background_counter % 32 < 16:
@@ -473,6 +493,9 @@ def game_over_screen():
         pygame.display.flip()
         clock.tick(FPS)
 
+# Show the temporary black screen with the current_score
+display_score_screen(current_score, font)
+
 # Show the "Game Over" screen
 restart = game_over_screen()
 
@@ -481,4 +504,3 @@ if restart:
     os.execv(sys.executable, ['python'] + sys.argv)
 else:
     pygame.quit()
-

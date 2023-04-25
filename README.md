@@ -8,9 +8,13 @@ But there's hope! Along the way, friendly seahorses will appear, ready to be col
 
 # Installation
 
-## Clone this GitHub repository: `git clone https://github.com/LW068/bettys-cloud-dodger.git`
+## Clone this GitHub Repository `Locally` : 
 
-1. Navigate to the project directory: `cd bettys-cloud-dodger`
+```
+git clone https://github.com/LW068/Bettys-Cloud-Dodger.git
+```
+
+1. Navigate to the project directory: `cd Bettys-Cloud-Dodger`
 
 2. Install pygame by running `pip install pygame` or `pip3 install` pygame in your terminal.
 

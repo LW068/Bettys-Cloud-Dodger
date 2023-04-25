@@ -420,17 +420,16 @@ def game_over_screen():
             credit_rect = credit_text.get_rect(center=(WIDTH // 2, credit_y + i * credit_height))
             screen.blit(credit_text, credit_rect)
 
-        # Check if all credits have finished rolling up
-        if credit_y + len(credits_list) * credit_height < credits_rect.top:
-            break
+        # Check if all credits have finished rolling down
+        if credit_y < -len(credits_list) * credit_height:
+            return True
+
+        # Define BLACK color as (R, G, B) tuple
+        BLACK = (0, 0, 0)
 
         # Blit the credits rectangle onto the screen
-        #screen.fill(BLACK, credits_rect)
+        screen.fill(BLACK, credits_rect)
         screen.blit(credits_surf, credits_rect)
-
-        # Check if all credits have finished rolling down
-        if credit_y >= HEIGHT:
-            return True
 
         pygame.display.flip()
         clock.tick(FPS)

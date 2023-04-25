@@ -367,6 +367,9 @@ def game_over_screen():
     restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
+
+    # Define BLACK color as (R, G, B) tuple
+    BLACK = (0, 0, 0)
     credit_y = 50  # Start credits 50 pixels from the top of the screen
 
     # Define the list of credits
@@ -422,8 +425,6 @@ def game_over_screen():
         screen.fill(BLACK, credits_rect)
         screen.blit(credits_surf, credits_rect)
 
-        BLACK = (0, 0, 0) # Define BLACK color as (R, G, B) tuple 
-
         # Check if all credits have finished rolling up
         if credit_y + len(credits_list) * credit_height < credits_rect.top:
             break
@@ -434,7 +435,7 @@ def game_over_screen():
             return True
 
         # Check if all credits have finished rolling up
-        #if credit_y + len(credits_list) * credit_height < 0:
+        # if credit_y + len(credits_list) * credit_height < 0:
             #return True
 
         pygame.display.flip()

@@ -379,7 +379,7 @@ def game_over_screen():
     ]
 
     # Define the credits rectangle
-    credits_rect = pygame.Rect(150, 100, 400, 400)
+    credits_rect = pygame.Rect(125, 125, 300, 300)
 
     # Define the size of the credit text
     credit_size = 32

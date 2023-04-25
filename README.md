@@ -1,12 +1,12 @@
-## Betty's Cloud Dodger
+# Betty's Cloud Dodger
 
 Welcome to Betty's Cloud Dodger, an exciting and challenging Pygame-based game that will test your reflexes and quick thinking! Take control of Betty, our nimble protagonist, as she navigates through the sky filled with treacherous falling clouds.
 
 But there's hope! Along the way, friendly seahorses will appear, ready to be collected to boost Betty's health and help her survive longer.
 
-## Installation
+# Installation
 
-# Clone this GitHub repository: git clone https://github.com/yourusername/bettys-cloud-dodger.git
+## Clone this GitHub repository: git clone https://github.com/yourusername/bettys-cloud-dodger.git
 
 Navigate to the project directory: cd bettys-cloud-dodger
 

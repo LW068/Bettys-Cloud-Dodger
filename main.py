@@ -434,7 +434,7 @@ def game_over_screen():
             screen.blit(credit_text, credit_rect)
 
         # Update the position of the credits
-        credit_y += credits_speed
+        credit_y -= credits_speed
 
         # Check if all credits have finished rolling down
         if credit_y < -len(credits_list) * credit_height:

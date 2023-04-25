@@ -409,8 +409,8 @@ def game_over_screen():
         screen.blit(game_over_text, game_over_rect)
         screen.blit(restart_button, restart_button_rect)
 
-        # Move the credits up the screen
-        credit_y -= 1
+        # Move the credits down the screen
+        credit_y += 1
 
         # Render the credits onto the credits rectangle
         credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)

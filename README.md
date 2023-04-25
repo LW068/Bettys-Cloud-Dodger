@@ -12,7 +12,7 @@ Navigate to the project directory: cd bettys-cloud-dodger
 
 Install pygame by running `pip install pygame` or `pip3 install` pygame in your terminal.
 
-Run the game by executing the main.py script: `python main.py` ~ or `python3 main.py`
+Run the game by executing the main.py script: `python main.py` or `python3 main.py`
 
 ## Controls
 

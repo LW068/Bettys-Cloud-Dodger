@@ -16,7 +16,7 @@ Run the game by executing the main.py script: ~ python main.py ~ or ~ python3 ma
 
 ## Controls
 
-Use the mouse to click on ~ "PRESS START" ~ to begin the game and ~ "PLAY AGAIN" ~ to restart after a game over.
+Use the mouse to click on ~"PRESS START"~ to begin the game and ~ "PLAY AGAIN" ~ to restart after a game over.
 
 Use the arrow keys (left and right) to move Betty and dodge the falling clouds.
 

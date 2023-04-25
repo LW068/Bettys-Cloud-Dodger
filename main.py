@@ -440,6 +440,7 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
+
     
 def display_score_screen(current_score, font):
     start_time = pygame.time.get_ticks()
@@ -461,6 +462,8 @@ def display_score_screen(current_score, font):
                 pygame.quit()
                 sys.exit()
 
+   
+
 def game_over_screen():
     mixer.music.load(end_theme)
     mixer.music.play(-1)  # Loop the music indefinitely
@@ -470,14 +473,41 @@ def game_over_screen():
     restart_text = font.render("", True, WHITE)
 
     background_counter = 0  # Line to initialize the counter for screen flickering
+    credit_y = 30  # Start credits 50 pixels from the top of the screen
 
-    while True:
+    # Define the list of credits
+    credits_list = [
+        "Game Design: Mico, Ricardo, Dennis",
+        "Programming: Mico, Dennis",
+        "Artwork: Ricardo",
+        "Music and Sound Effects: Ricardo, Dennis, Mico",
+        "Special Thanks: Our Hightech Brains"
+    ]
+
+    # Define the credits rectangle
+    credits_rect = pygame.Rect(250, 5, 300, 150)
+
+    # Define the size of the credit text
+    credit_size = 20
+
+    # Create a new surface for the credits frame
+    credits_frame = pygame.Surface(credits_rect.size)
+    credits_frame.fill((100, 600, 255))  # Set the background color to white
+
+    # Calculate the height of each credit line
+    credit_height = credit_size + 5
+
+    # Calculate the starting position of the credits
+    credit_y = credits_rect.bottom
+
+    rolling_credits = True
+    while rolling_credits:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if restart_button_rect.collidepoint(event.pos):
-                    return True
+                    rolling_credits = False # stop rolling the credits
 
         background_counter += 1  # Update the counter
 
@@ -489,6 +519,33 @@ def game_over_screen():
 
         screen.blit(game_over_text, game_over_rect)
         screen.blit(restart_button, restart_button_rect)
+
+        
+        # Render the credits onto the credits rectangle
+        credits_surf = pygame.Surface(credits_rect.size, pygame.SRCALPHA)
+
+
+
+        # Render the credits onto the credits frame
+        credits_frame.fill((255, 255, 255))  # Clear the frame
+
+        BLACK = (0,0,0)
+
+        # Display each line of the credits
+        for i, credit in enumerate(credits_list):
+            credit_text = font.render(credit, True, BLACK)
+            credit_rect = credit_text.get_rect(center=(credits_rect.width // 2, i * credit_height + credit_size // 2))
+            credits_frame.blit(credit_text, credit_rect)
+
+        # Blit the credits frame onto the main screen
+        screen.blit(credits_frame, credits_rect)
+
+        # Move the credits up within the credits rectangle
+        credits_rect.move_ip(0, 1)
+
+        # Check if all credits have finished rolling down
+        if credit_y < -len(credits_list) * credit_height:
+            return True
 
         pygame.display.flip()
         clock.tick(FPS)

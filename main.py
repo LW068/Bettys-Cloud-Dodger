@@ -425,7 +425,7 @@ def game_over_screen():
             break
 
         # Blit the credits rectangle onto the screen
-        screen.fill(BLACK, credits_rect)
+        #screen.fill(BLACK, credits_rect)
         screen.blit(credits_surf, credits_rect)
 
         # Check if all credits have finished rolling down

@@ -2,11 +2,11 @@ import pygame
 import random
 import sys
 import os
-from pygame import mixer
+# from pygame import mixer
 
 #Initializing pygame / sound mixer for custom audio clips 
 pygame.init()
-mixer.init()
+# mixer.init()
 
 # Setting Screen dimensions
 WIDTH = 800
@@ -147,11 +147,11 @@ cloud_image3 = pygame.transform.scale(cloud_image3, (100, 100))
 cloud_images = [cloud_image1, cloud_image2, cloud_image3]
 
 # Soundtrack and Audios Loader 
-bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
-main_theme = 'audios/BettysCloudDodgerMainTheme.mp3'
-end_theme = 'audios/BettysCloudDodgerEndCredits.mp3'
-rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
-thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
+# bettydead_sound = mixer.Sound('audios/bettydead_sound.mp3')
+# main_theme = 'audios/BettysCloudDodgerMainTheme.mp3'
+# end_theme = 'audios/BettysCloudDodgerEndCredits.mp3'
+# rain_theme = 'audios/BettysCloudDodgerRainTheme.mp3'
+# thunder_theme = 'audios/BettysCloudDodgerThunderstormTheme.mp3'
 
 # In-Game Backgrounds Loader
 normal_background = pygame.image.load("graphics/normalbackground.jpeg")
@@ -167,13 +167,13 @@ background_y2 = -HEIGHT
 background_speed = 2
 
 # Game Menu Music for START SCREEN
-if os.path.isfile(main_theme):
-    try:
-        mixer.music.load(main_theme)
-        mixer.music.play(-1)
-        print("Music started playing.")
-    except pygame.error as e:
-        print(f"Error loading music: {e}")
+# if os.path.isfile(main_theme):
+    # try:
+        # mixer.music.load(main_theme)
+        # mixer.music.play(-1)
+        # print("Music started playing.")
+    # except pygame.error as e:
+        # print(f"Error loading music: {e}")
 
 menu = True # initalizing menu variable and setting the value to True / controls menu display
 running = False # Initalizing running variable and setting value to False / controls game loop
@@ -255,12 +255,12 @@ def check_collision_seahorse(betty, seahorse):
 game_over_text = font.render("", True, RED)
 game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
 
-if os.path.isfile(main_theme):
-    try:
-        mixer.music.load(main_theme)
-        mixer.music.play(-1)
-    except pygame.error:
-        pass
+# if os.path.isfile(main_theme):
+    # try:
+        # mixer.music.load(main_theme)
+        # mixer.music.play(-1)
+    # except pygame.error:
+        # pass
 
 # Displays last high score from txt file
 def draw_high_score(screen, high_score, x, y, font, color):
@@ -268,9 +268,9 @@ def draw_high_score(screen, high_score, x, y, font, color):
     screen.blit(high_score_text, (x, y))
 
 # Initialize a variable to keep track of the current music
-current_music = main_theme
-mixer.music.load(current_music)
-mixer.music.play(-1)
+# current_music = main_theme
+# mixer.music.load(current_music)
+# mixer.music.play(-1)
 
 # Start Game loop / constantly updating 
 while running:
@@ -305,31 +305,31 @@ while running:
         cloud_speed = 10
         background_speed = 5
         seahorse_speed = 8
-        if current_music != main_theme:
-            mixer.music.stop()
-            mixer.music.load(main_theme)
-            mixer.music.play(-1)
-            current_music = main_theme
+        # if current_music != main_theme:
+            # mixer.music.stop()
+            # mixer.music.load(main_theme)
+            # mixer.music.play(-1)
+            # current_music = main_theme
     elif elapsed_time < 165000:
         current_background = rain_background
         cloud_speed = 15
         background_speed = 13
         seahorse_speed = 12
-        if current_music != rain_theme:
-            mixer.music.stop()
-            mixer.music.load(rain_theme)
-            mixer.music.play(-1)
-            current_music = rain_theme
+        # if current_music != rain_theme:
+            # mixer.music.stop()
+            # mixer.music.load(rain_theme)
+            # mixer.music.play(-1)
+            # current_music = rain_theme
     else:
         current_background = thunder_background
         cloud_speed = 20
         background_speed = 18
         seahorse_speed = 16
-        if current_music != thunder_theme:
-            mixer.music.stop()
-            mixer.music.load(thunder_theme)
-            mixer.music.play(-1)
-            current_music = thunder_theme
+        # if current_music != thunder_theme:
+            # mixer.music.stop()
+            # mixer.music.load(thunder_theme)
+            # mixer.music.play(-1)
+            # current_music = thunder_theme
 
 
     # Update the background image positions and draw them. This will make the background image scroll vertically and loop.
@@ -419,9 +419,9 @@ while running:
             betty_health -= 3  # Decrease player health by          
 
     if betty_health <= 0: # if Betty's health is less than equal to 0 then hit the stop on the mixer and play death sound
-        mixer.music.stop() #Stop theme music playing instantly
-        bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
-        bettydeath_sound.play() # When Betty's health hits 0%
+        # mixer.music.stop() #Stop theme music playing instantly
+        # bettydeath_sound = mixer.Sound('audios/bettydead_sound.mp3')
+        # bettydeath_sound.play() # When Betty's health hits 0%
         running = False  # End the game if player health reaches 0% Health
 
     # Players High score
@@ -462,8 +462,8 @@ def display_score_screen(current_score, font):
                 sys.exit()
 
 def game_over_screen():
-    mixer.music.load(end_theme)
-    mixer.music.play(-1)  # Loop the music indefinitely
+    # mixer.music.load(end_theme)
+    # mixer.music.play(-1)  # Loop the music indefinitely
 
     restart_button = pygame.Surface((200, 70), pygame.SRCALPHA)
     restart_button_rect = restart_button.get_rect(center=(WIDTH // 2, HEIGHT // 2.7))

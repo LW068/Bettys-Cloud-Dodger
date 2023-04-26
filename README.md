@@ -19,6 +19,8 @@ git clone https://github.com/LW068/Bettys-Cloud-Dodger.git
 
 3. Run the game by executing the main.py script: `python main.py` or `python3 main.py`
 
+#### If you're running on an old operating system that can't handle the "mixer" module when trying to run `main.py`, or simply want to play the game with no sound; go to branch `No_Sound` and run `main.py` from there. Game should run with no sound enabled.
+
 ## Controls
 
 * Use the mouse to click on `"PRESS START"` to begin the game and `"PLAY AGAIN"` to restart after a game over.

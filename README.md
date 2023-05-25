@@ -6,7 +6,15 @@ As time passes, the game will become increasingly challenging, introducing new p
 
 But there's hope! Along the way, friendly seahorses will appear, ready to be collected to boost Betty's health and help her survive longer.
 
-# Installation
+# [Start Game](https://replit.com/@LW068/Bettys-Cloud-Dodger?v=1)
+
+## New Update! 
+
+Click the "Start Game" button located above to play the game on replit.com - No local installation needed anymore!
+
+# Installation 
+
+### (Not Needed Unless You Want The Game Locally - Might Run Smoother)
 
 ## Clone this GitHub Repository `Locally` : 
 ```
